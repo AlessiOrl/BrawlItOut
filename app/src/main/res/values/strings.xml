@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BrawlItOut</string>
+    <string name="title_single">Single Player</string>
+    <string name="title_multi">Multi Player</string>
+    <string name="title_info">Info</string>
+    <string name="title_score">Scoreboard</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="reset">Reset</string>
+</resources>

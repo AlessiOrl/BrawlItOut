@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_single"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/title_single" />
+    <item
+        android:id="@+id/navigation_multi"
+        android:icon="@drawable/baseline_groups_24"
+        android:title="@string/title_multi" />
+    <item
+        android:id="@+id/navigation_score"
+        android:icon="@drawable/baseline_leaderboard_24"
+        android:title="@string/title_score" />
+    <item
+        android:id="@+id/navigation_info"
+        android:icon="@drawable/outline_help_24"
+        android:title="@string/title_info" />
+
+</menu>

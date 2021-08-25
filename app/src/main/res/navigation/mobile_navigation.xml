@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_info">
+
+    <fragment
+        android:id="@+id/navigation_single"
+        android:name="orlando.hci.brawlitout.Fragments.SinglePFragment"
+        android:label="@string/title_single"
+        tools:layout="@layout/fragment_single" />
+
+    <fragment
+        android:id="@+id/navigation_multi"
+        android:name="orlando.hci.brawlitout.Fragments.MultiPFragment"
+        android:label="@string/title_multi"
+        tools:layout="@layout/fragment_multi" />
+    <fragment
+        android:id="@+id/navigation_score"
+        android:name="orlando.hci.brawlitout.Fragments.ScoreFragment"
+        android:label="@string/title_score"
+        tools:layout="@layout/fragment_score" />
+
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="orlando.hci.brawlitout.Fragments.InfosFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
+
+</navigation>
