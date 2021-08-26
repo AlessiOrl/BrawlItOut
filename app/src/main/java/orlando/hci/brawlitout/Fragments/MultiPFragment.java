@@ -1,5 +1,6 @@
 package orlando.hci.brawlitout.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import orlando.hci.brawlitout.Adapters.PlayerAdapter;
 import orlando.hci.brawlitout.Utils.Player;
 import orlando.hci.brawlitout.R;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class MultiPFragment extends Fragment {
 
@@ -26,6 +28,7 @@ public class MultiPFragment extends Fragment {
     private Button ok_btn;
     private EditText nplayer_edit;
     private PlayerAdapter platerAdapter;
+    private Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class MultiPFragment extends Fragment {
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        context = getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_multi, container, false);
         ok_btn = root.findViewById(R.id.ok_btn);
         nplayer_edit = root.findViewById(R.id.edit_nplayer);

@@ -1,4 +1,4 @@
-package com.example.androidaccelerometerexample;
+package orlando.hci.brawlitout.Utils;
 
 
 import android.content.SharedPreferences;
