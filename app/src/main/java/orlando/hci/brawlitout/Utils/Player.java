@@ -6,19 +6,24 @@ public class Player {
 
     private int id;
     private String name;
-    private Double time;
+    private Float time;
 
     public Player(int id, String name){
         this.id = id;
         this.name = name;
-        this.time = -1.0;
+        this.time = (float)-1.0;
+    }
+
+    public Player(String name, Float time){
+        this.name = name;
+        this.time = time;
     }
 
     public String getName() {
         return name;
     }
 
-    public Double getTime() {
+    public Float getTime() {
         return time;
     }
     @Override
@@ -30,7 +35,7 @@ public class Player {
         this.name = name;
     }
 
-    public void setTime(Double time) {
+    public void setTime(Float time) {
         this.time = time;
     }
 }
