@@ -43,7 +43,8 @@
             android:id="@+id/modifyBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@android:drawable/ic_menu_edit" />
+            android:background="@android:drawable/ic_menu_edit"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     </LinearLayout>
 
