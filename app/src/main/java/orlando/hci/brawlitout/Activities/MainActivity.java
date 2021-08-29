@@ -1,12 +1,14 @@
 package orlando.hci.brawlitout.Activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -34,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_single, R.id.navigation_multi, R.id.navigation_score, R.id.navigation_info)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        View frag = (View) findViewById(R.id.nav_host_fragment);
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
 
 
     }

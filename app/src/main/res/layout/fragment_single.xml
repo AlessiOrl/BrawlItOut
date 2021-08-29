@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/single_relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
@@ -11,7 +12,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
 
         <TextView
@@ -53,8 +53,9 @@
             android:id="@+id/image_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/black"
+            android:fadingEdge="horizontal|vertical"
+            android:scaleType="centerCrop"
+            android:src="@drawable/down_white"
             android:visibility="gone"
             tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"></pl.droidsonroids.gif.GifImageButton>
     </RelativeLayout>

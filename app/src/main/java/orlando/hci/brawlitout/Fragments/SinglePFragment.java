@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         result = (TextView) root.findViewById(R.id.chronometer);
         imageButton = (GifImageButton) root.findViewById(R.id.image_button);
 
+        RelativeLayout rl = (RelativeLayout) root.findViewById(R.id.single_relative);
 
         ss_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
