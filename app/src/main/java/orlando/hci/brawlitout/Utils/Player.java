@@ -7,6 +7,7 @@ public class Player {
     private int id;
     private String name;
     private Float time;
+    private Float lastTime;
 
     public Player(int id, String name){
         this.id = id;
@@ -19,6 +20,13 @@ public class Player {
         this.time = time;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return player.getName() == this.name;
+    }
+
     public String getName() {
         return name;
     }
@@ -26,6 +34,9 @@ public class Player {
     public Float getTime() {
         return time;
     }
+
+    public Float getLastTime() { return lastTime; }
+
     @Override
     public String toString() {
         return name;
@@ -38,4 +49,6 @@ public class Player {
     public void setTime(Float time) {
         this.time = time;
     }
+
+    public void setLastTime(Float lastTime) {this.lastTime = lastTime;}
 }
