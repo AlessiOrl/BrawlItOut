@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,7 +21,8 @@ public class DataFragment extends Fragment {
     public void add(Player player){
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putFloat(player.getName(), player.getTime());
+        editor.putString(Integer.toString(player.getId()), player.getName()+'/'+Float.toString(player.getTime()));
+        //editor.putFloat(Integer.toString(player.getId()), player.getTime());
         editor.apply();
         Toast.makeText(getActivity(),"Data saved!",Toast.LENGTH_SHORT).show();
 
@@ -34,26 +36,25 @@ public class DataFragment extends Fragment {
         Activity activity = getActivity();
         if(activity != null){
             SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-            Map<String,Float> players = (Map<String, Float>) sharedPreferences.getAll();
+            Map<String,String> players = (Map<String, String>) sharedPreferences.getAll();
             LinkedHashMap<String, Float> sortedMap = new LinkedHashMap<>();
 
-            players.entrySet()
-                    .stream()
-                    .sorted(Map.Entry.comparingByValue())
-                    .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-
-            for (Map.Entry<String, Float> entry : players.entrySet()) usersList.add(new Player(entry.getKey(),entry.getValue()));
-
+            for (Map.Entry<String, String> entry : players.entrySet()) {
+                String[] parts = entry.getValue().split("/");
+                usersList.add(new Player(Integer.parseInt(entry.getKey()),parts[0],Float.parseFloat(parts[1])));
+            }
+            usersList.sort(Comparator.comparing(Player::getTime));
             return usersList;
 
         }
         return usersList;
     }
 
-    public void remove(String key){
+    public void remove(Integer key){
+        String k = Integer.toString(key);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(key);
+        editor.remove(k);
     }
 
     public void clear(){

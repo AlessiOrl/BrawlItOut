@@ -64,7 +64,7 @@ public class ScoreFragment extends Fragment {
     private void setUserInfo(){
         DataFragment dataFragment = new DataFragment();
         usersList = dataFragment.load();
-        usersList.add(new Player("name",(float)1.0));
+        usersList.add(new Player(1,"name",(float)1.0));
 
         //LinkedHashMap preserve the ordering of elements in which they are inserted
 

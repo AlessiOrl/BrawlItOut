@@ -15,7 +15,8 @@ public class Player {
         this.time = (float)-1.0;
     }
 
-    public Player(String name, Float time){
+    public Player(int id, String name, Float time){
+        this.id = id;
         this.name = name;
         this.time = time;
     }
@@ -24,8 +25,10 @@ public class Player {
     public boolean equals(Object o){
         if (!(o instanceof Player)) return false;
         Player player = (Player) o;
-        return player.getName() == this.name;
+        return player.getId() == this.id;
     }
+
+    public int getId(){return id;}
 
     public String getName() {
         return name;
