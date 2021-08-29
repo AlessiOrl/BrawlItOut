@@ -77,8 +77,9 @@ public class MultiPFragment extends Fragment {
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SinglePFragment singlePFragment = new SinglePFragment();
                 FragmentTransaction fragmentTransaction =  getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment, new SinglePFragment());
+                fragmentTransaction.replace(R.id.nav_host_fragment, singlePFragment);
                 fragmentTransaction.commit();
             }
         });

@@ -4,35 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="orlando.hci.brawlitout.Activities.ChronoActivity">
+    android:visibility="visible"
+    tools:context="orlando.hci.brawlitout.Activities.MainActivity">
 
 
-    <TextView
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/black"
-        android:textSize="60sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button_start_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chronometer"
-        android:layout_centerHorizontal="true"
-        android:text="@string/start" />
 
-    <Button
-        android:id="@+id/button_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_start_pause"
-        android:layout_alignEnd="@+id/button_start_pause"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="0dp"
-        android:text="@string/reset"
-        android:visibility="visible"
-        tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chronometer"
+            android:layout_centerHorizontal="true"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_start"
+            android:layout_alignEnd="@+id/button_start"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="0dp"
+            android:text="@string/reset"
+            android:visibility="visible"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <pl.droidsonroids.gif.GifImageButton
+            android:id="@+id/image_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/black"
+            android:visibility="gone"
+            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"></pl.droidsonroids.gif.GifImageButton>
+    </RelativeLayout>
 
 </RelativeLayout>
