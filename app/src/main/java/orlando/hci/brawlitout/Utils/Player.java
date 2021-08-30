@@ -9,22 +9,18 @@ public class Player implements Serializable {
 
     private String name;
     private Float time;
-    private Float lastTime;
 
-    public Player( String name){
+    public Player(String name) {
 
         this.name = name;
-        this.time = (float)-1.0;
+        this.time = (float) -1.0;
     }
 
-    public Player( String name, Float time){
+    public Player(String name, Float time) {
 
         this.name = name;
         this.time = time;
     }
-
-
-
 
 
     public String getName() {
@@ -34,8 +30,6 @@ public class Player implements Serializable {
     public Float getTime() {
         return time;
     }
-
-    public Float getLastTime() { return lastTime; }
 
     @Override
     public String toString() {
@@ -50,5 +44,4 @@ public class Player implements Serializable {
         this.time = time;
     }
 
-    public void setLastTime(Float lastTime) {this.lastTime = lastTime;}
 }

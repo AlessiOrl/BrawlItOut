@@ -22,7 +22,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView index;
         private TextView place;
         private TextView nameTxt;
         private TextView time;
@@ -38,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_items,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score,parent,false);
         return new MyViewHolder(itemView);
     }
 

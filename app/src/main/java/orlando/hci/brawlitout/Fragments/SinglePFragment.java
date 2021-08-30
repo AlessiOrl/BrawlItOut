@@ -1,8 +1,6 @@
 package orlando.hci.brawlitout.Fragments;
 
 import android.content.Context;
-import android.graphics.drawable.AnimatedImageDrawable;
-import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,19 +14,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import orlando.hci.brawlitout.R;
+import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
+import orlando.hci.brawlitout.Utils.Player;
 import pl.droidsonroids.gif.GifImageButton;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,13 +39,18 @@ import java.util.List;
 public class SinglePFragment extends Fragment implements SensorEventListener {
 
 
+    private DataHandlerSingleton dataHandler;
+
     private long starttime;
     private long endtime;
-    private double difference;
+    private float difference;
     private Button ss_btn;
     private Button r_btn;
     private GifImageButton imageButton;
     private TextView result;
+    private EditText usernameTextE;
+    private TextView usernameTextV;
+
 
     private static final String TAG = "MainActivity";
     private Float xTotal = (float) 0;
@@ -55,6 +62,21 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
     private List<Float> yHistory = new ArrayList<Float>();
     private List<Float> zHistory = new ArrayList<Float>();
     private Integer gameState = 0;
+    private String username;
+    private Player player;
+    private FragmentActivity factivity = null;
+
+
+    public SinglePFragment() {
+        super();
+    }
+
+    public SinglePFragment(Player p, FragmentActivity factivity) throws IOException, ClassNotFoundException {
+        this();
+        this.player = p;
+        this.username = p.getName();
+        this.factivity = factivity;
+    }
 
 
     @Override
@@ -75,8 +97,27 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         r_btn = (Button) root.findViewById(R.id.button_reset);
         result = (TextView) root.findViewById(R.id.chronometer);
         imageButton = (GifImageButton) root.findViewById(R.id.image_button);
+        usernameTextE = (EditText) root.findViewById(R.id.edit_username);
+        usernameTextV = (TextView) root.findViewById(R.id.edit_username);
 
+        if (factivity != null) {
+            usernameTextV.setText(this.username);
+            usernameTextV.setVisibility(View.VISIBLE);
+            r_btn.setText(R.string.next);
+        } else {
+            usernameTextE.setVisibility(View.VISIBLE);
+
+        }
         RelativeLayout rl = (RelativeLayout) root.findViewById(R.id.single_relative);
+
+        try {
+            dataHandler= DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         ss_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -86,7 +127,13 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
 
         r_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                resetGame();
+                if (factivity != null) {
+                    player.setTime(difference);
+                    dataHandler.addmultiplayerscore(player);
+                    getFragmentManager().popBackStackImmediate();
+                } else {
+                    resetGame();
+                }
             }
         });
 
@@ -94,10 +141,24 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
             public void onClick(View v) {
                 stopGame();
                 imageButtonEndState();
+                try {
+                    saveScore();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         return root;
+
+    }
+
+    private void saveScore() throws IOException, ClassNotFoundException {
+        if (factivity == null) this.username = usernameTextE.getText().toString();
+        if (username.equals("")) return;
+        dataHandler.add(new Player(username, difference));
 
     }
 
@@ -182,9 +243,9 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
                 " Y: " + yTotal +
                 " Z: " + zTotal);
         endtime = System.nanoTime();
-
-        difference = (endtime - starttime) / 1e3;
+        difference = (float) ((endtime - starttime) / 1e3);
         updateTime(difference / 1e3);
+
     }
 
     public void clearMovementHistory() {
@@ -194,6 +255,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
     }
 
     public void resetGame() {
+        imageButtonEndState();
         ss_btn.setVisibility(View.VISIBLE);
         clearMovementHistory();
         sensorManager.unregisterListener(SinglePFragment.this);
