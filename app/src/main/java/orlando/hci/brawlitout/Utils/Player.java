@@ -1,34 +1,31 @@
 package orlando.hci.brawlitout.Utils;
 
+import java.io.Serializable;
+
 import javax.xml.namespace.QName;
 
-public class Player {
+public class Player implements Serializable {
 
-    private int id;
+
     private String name;
     private Float time;
     private Float lastTime;
 
-    public Player(int id, String name){
-        this.id = id;
+    public Player( String name){
+
         this.name = name;
         this.time = (float)-1.0;
     }
 
-    public Player(int id, String name, Float time){
-        this.id = id;
+    public Player( String name, Float time){
+
         this.name = name;
         this.time = time;
     }
 
-    @Override
-    public boolean equals(Object o){
-        if (!(o instanceof Player)) return false;
-        Player player = (Player) o;
-        return player.getId() == this.id;
-    }
 
-    public int getId(){return id;}
+
+
 
     public String getName() {
         return name;

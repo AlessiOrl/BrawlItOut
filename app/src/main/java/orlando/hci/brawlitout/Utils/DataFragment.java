@@ -9,21 +9,35 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import orlando.hci.brawlitout.R;
 
 public class DataFragment extends Fragment {
-    public static final String SHARED_PREFERENCES = "sharedPrefs";
-    public void add(Player player){
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Integer.toString(player.getId()), player.getName()+'/'+Float.toString(player.getTime()));
-        //editor.putFloat(Integer.toString(player.getId()), player.getTime());
-        editor.apply();
+    public static final String DATA_PATH = "saved_data";
+    public void add(Player player) throws IOException, ClassNotFoundException {
+
+        FileInputStream fis = getContext().openFileInput(DATA_PATH);
+        ObjectInputStream is = new ObjectInputStream(fis);
+        ArrayList<Player> players = (ArrayList<Player>)is.readObject();
+        is.close();
+        fis.close();
+        players.add(player);
+        FileOutputStream fos = getContext().openFileOutput(DATA_PATH, Context.MODE_PRIVATE);
+        ObjectOutputStream os = new ObjectOutputStream(fos);
+        os.writeObject(players);
+        os.close();
+        fos.close();
         Toast.makeText(getActivity(),"Data saved!",Toast.LENGTH_SHORT).show();
 
     }
@@ -31,35 +45,36 @@ public class DataFragment extends Fragment {
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<Player> load(){
-        ArrayList<Player> usersList = new ArrayList<>();
-        Activity activity = getActivity();
-        if(activity != null){
-            SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-            Map<String,String> players = (Map<String, String>) sharedPreferences.getAll();
-            LinkedHashMap<String, Float> sortedMap = new LinkedHashMap<>();
-
-            for (Map.Entry<String, String> entry : players.entrySet()) {
-                String[] parts = entry.getValue().split("/");
-                usersList.add(new Player(Integer.parseInt(entry.getKey()),parts[0],Float.parseFloat(parts[1])));
-            }
-            usersList.sort(Comparator.comparing(Player::getTime));
-            return usersList;
-
-        }
-        return usersList;
+    public ArrayList<Player> load() throws IOException, ClassNotFoundException {
+        FileInputStream fis = getContext().openFileInput(DATA_PATH);
+        ObjectInputStream is = new ObjectInputStream(fis);
+        ArrayList<Player> players = (ArrayList<Player>)is.readObject();
+        is.close();
+        fis.close();
+        return players;
     }
 
-    public void remove(Integer key){
-        String k = Integer.toString(key);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(k);
+    public void remove(Player player) throws IOException, ClassNotFoundException {
+        FileInputStream fis = getContext().openFileInput(DATA_PATH);
+        ObjectInputStream is = new ObjectInputStream(fis);
+        ArrayList<Player> players = (ArrayList<Player>)is.readObject();
+        is.close();
+        fis.close();
+        players.remove(player);
+        FileOutputStream fos = getContext().openFileOutput(DATA_PATH, Context.MODE_PRIVATE);
+        ObjectOutputStream os = new ObjectOutputStream(fos);
+        os.writeObject(players);
+        os.close();
+        fos.close();
+        Toast.makeText(getActivity(),"Data saved!",Toast.LENGTH_SHORT).show();
     }
 
-    public void clear(){
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
+    public void clear() throws IOException {
+        FileOutputStream fos = getContext().openFileOutput(DATA_PATH, Context.MODE_PRIVATE);
+        ObjectOutputStream os = new ObjectOutputStream(fos);
+        os.writeObject(new ArrayList<Player>());
+        os.close();
+        fos.close();
+        Toast.makeText(getActivity(),"Data cleared",Toast.LENGTH_SHORT).show();
     }
 }

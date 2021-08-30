@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -47,7 +48,13 @@ public class ScoreFragment extends Fragment {
         context = getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_score, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
-        setUserInfo();
+        try {
+            setUserInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         setAdapter();
         return root;
     }
@@ -61,10 +68,10 @@ public class ScoreFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setUserInfo(){
+    private void setUserInfo() throws IOException, ClassNotFoundException {
         DataFragment dataFragment = new DataFragment();
         usersList = dataFragment.load();
-        usersList.add(new Player(1,"name",(float)1.0));
+        usersList.add(new Player("name",(float)1.0));
 
         //LinkedHashMap preserve the ordering of elements in which they are inserted
 
