@@ -61,7 +61,6 @@ public class DataHandlerSingleton {
         this.multiplayer = new ArrayList<>();
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<Player> load() throws IOException, ClassNotFoundException {
         if (context.fileList().length == 0) save(new ArrayList<>());

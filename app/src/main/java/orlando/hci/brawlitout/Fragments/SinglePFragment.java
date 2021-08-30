@@ -98,7 +98,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         result = (TextView) root.findViewById(R.id.chronometer);
         imageButton = (GifImageButton) root.findViewById(R.id.image_button);
         usernameTextE = (EditText) root.findViewById(R.id.edit_username);
-        usernameTextV = (TextView) root.findViewById(R.id.edit_username);
+        usernameTextV = (TextView) root.findViewById(R.id.text_username);
 
         if (factivity != null) {
             usernameTextV.setText(this.username);

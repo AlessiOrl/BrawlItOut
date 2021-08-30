@@ -8,7 +8,7 @@ public class Player implements Serializable {
 
 
     private String name;
-    private Float time;
+    private float time;
 
     public Player(String name) {
 
@@ -16,7 +16,7 @@ public class Player implements Serializable {
         this.time = (float) -1.0;
     }
 
-    public Player(String name, Float time) {
+    public Player(String name, float time) {
 
         this.name = name;
         this.time = time;
@@ -40,7 +40,7 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public void setTime(Float time) {
+    public void setTime(float time) {
         this.time = time;
     }
 
