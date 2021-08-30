@@ -31,7 +31,6 @@ public class MultiPFragment extends Fragment {
     private Button start_btn;
     private TextView nplayer_text;
     private PlayerAdapter platerAdapter;
-    private Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class MultiPFragment extends Fragment {
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        context = getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_multi, container, false);
         up_btn = root.findViewById(R.id.up_btn);
         down_btn = root.findViewById(R.id.down_btn);
