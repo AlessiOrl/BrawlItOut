@@ -18,29 +18,16 @@ import orlando.hci.brawlitout.Utils.Player;
 public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.MyViewHolder> {
     private ArrayList<Player> usersList;
 
-    public ScoreboardAdapter(ArrayList<Player> usersList){
+    public ScoreboardAdapter(ArrayList<Player> usersList) {
         usersList.sort(Comparator.comparing(Player::getTime));
         this.usersList = usersList;
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-
-        private TextView place;
-        private TextView nameTxt;
-        private TextView time;
-        public MyViewHolder(final View view){
-            super(view);
-            place = view.findViewById(R.id.place);
-            nameTxt = view.findViewById(R.id.nameTxt);
-            time = view.findViewById(R.id.time);
-        }
     }
 
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -49,7 +36,7 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.My
         String name = usersList.get(position).getName();
         double time = usersList.get(position).getTime();
 
-        holder.place.setText(Integer.toString(position+1));
+        holder.place.setText(Integer.toString(position + 1));
         holder.nameTxt.setText(name);
         holder.time.setText(new DecimalFormat("#.###").format(time));
     }
@@ -57,6 +44,20 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.My
     @Override
     public int getItemCount() {
         return usersList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView place;
+        private TextView nameTxt;
+        private TextView time;
+
+        public MyViewHolder(final View view) {
+            super(view);
+            place = view.findViewById(R.id.place);
+            nameTxt = view.findViewById(R.id.nameTxt);
+            time = view.findViewById(R.id.time);
+        }
     }
 
 

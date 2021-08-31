@@ -56,6 +56,7 @@ public class DataHandlerSingleton {
         players.add(player);
         save(players);
     }
+
     public void add(int position, Player player) throws IOException, ClassNotFoundException {
         players.add(position, player);
         save(players);
@@ -74,7 +75,7 @@ public class DataHandlerSingleton {
     private ArrayList<Player> load() throws IOException, ClassNotFoundException {
         //Check if file exists, if not create it
         File file = context.getFileStreamPath(DATA_PATH);
-        if ( !file.exists()) save(new ArrayList<>());
+        if (!file.exists()) save(new ArrayList<>());
 
         FileInputStream fis = context.openFileInput(DATA_PATH);
         ObjectInputStream is = new ObjectInputStream(fis);

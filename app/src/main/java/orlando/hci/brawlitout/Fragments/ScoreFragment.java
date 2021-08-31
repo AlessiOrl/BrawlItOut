@@ -31,22 +31,17 @@ import orlando.hci.brawlitout.Utils.Player;
 
 public class ScoreFragment extends Fragment {
 
-    private DataHandlerSingleton dataHandler ;
+    private DataHandlerSingleton dataHandler;
 
-
-    private ArrayList<Player> usersList;
     private RecyclerView recyclerView;
     private Context context;
     ScoreboardAdapter adapter;
-
-
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        usersList = new ArrayList<>();
         //setContentView(R.layout.fragment_score);
 
     }
@@ -61,7 +56,7 @@ public class ScoreFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         try {
-            dataHandler= DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
             setUserInfo();
 
         } catch (IOException e) {
@@ -74,8 +69,8 @@ public class ScoreFragment extends Fragment {
         return root;
     }
 
-    private void setAdapter(){
-        adapter = new ScoreboardAdapter(usersList);
+    private void setAdapter() {
+        adapter = new ScoreboardAdapter(dataHandler.getPlayers());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -84,11 +79,6 @@ public class ScoreFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUserInfo() throws IOException, ClassNotFoundException {
-
-        usersList = dataHandler.getPlayers();
-        //LinkedHashMap preserve the ordering of elements in which they are inserted
-
-
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -100,25 +90,26 @@ public class ScoreFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            Player deletedPlayer = usersList.get(position);
+            Player deletedPlayer = dataHandler.getPlayers().get(position);
             //usersList.remove(position);
             try {
                 dataHandler.remove(position);
                 adapter.notifyItemRemoved(position);
-                Snackbar.make(recyclerView, deletedPlayer+" removed", Snackbar.LENGTH_LONG)
-                .setAction("Undo", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            dataHandler.add(position, deletedPlayer);
-                            adapter.notifyItemInserted(position);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).show();
+                Snackbar.make(recyclerView, deletedPlayer + " removed", Snackbar.LENGTH_LONG)
+                        .setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try {
+                                    dataHandler.add(position, deletedPlayer);
+                                    //adapter.notifyItemRangeChanged(position, dataHandler.getPlayers().size() - position); efficient but not cool
+                                    adapter.notifyDataSetChanged(); //cool but not efficient
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (ClassNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).show();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
