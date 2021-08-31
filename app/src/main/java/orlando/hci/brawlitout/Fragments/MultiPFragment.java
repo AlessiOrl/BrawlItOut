@@ -22,6 +22,8 @@ import orlando.hci.brawlitout.R;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//TODO: add in datahandler the fragment state
+
 public class MultiPFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
@@ -42,6 +44,7 @@ public class MultiPFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_multi, container, false);
         up_btn = root.findViewById(R.id.up_btn);
         down_btn = root.findViewById(R.id.down_btn);
