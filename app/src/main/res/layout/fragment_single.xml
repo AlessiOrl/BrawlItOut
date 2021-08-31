@@ -9,7 +9,7 @@
     tools:context="orlando.hci.brawlitout.Activities.MainActivity">
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,12 +21,14 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="114dp"
-            android:layout_marginTop="341dp"
-            android:layout_marginEnd="109dp"
+            android:layout_marginTop="320dp"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="60sp" />
+            android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_start"
@@ -35,10 +37,12 @@
             android:layout_below="@+id/chronometer"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="153dp"
-            android:layout_marginTop="66dp"
-            android:layout_marginEnd="152dp"
-            android:text="@string/start" />
+            android:layout_marginTop="44dp"
+            android:text="@string/start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chronometer" />
 
         <Button
             android:id="@+id/button_reset"
@@ -47,10 +51,12 @@
             android:layout_below="@+id/button_start"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="153dp"
-            android:layout_marginTop="29dp"
-            android:layout_marginEnd="152dp"
-            android:text="@string/reset" />
+            android:layout_marginTop="16dp"
+            android:text="@string/reset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_start" />
 
         <EditText
             android:id="@+id/edit_username"
@@ -59,9 +65,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="167dp"
-            android:layout_marginEnd="63dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="@string/hintUsername"
             android:importantForAutofill="no"
@@ -69,7 +73,13 @@
             android:minHeight="48dp"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/chronometer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.628" />
 
         <TextView
             android:id="@+id/text_username"
@@ -78,16 +88,19 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="167dp"
-            android:layout_marginEnd="63dp"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:visibility="visible" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/chronometer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.635" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -101,8 +114,8 @@
             android:scaleType="centerCrop"
             android:src="@drawable/down_white"
             android:visibility="gone"
-            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"></pl.droidsonroids.gif.GifImageButton>
+            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
