@@ -67,6 +67,7 @@ public class DataHandlerSingleton {
         FileInputStream fis = context.openFileInput(DATA_PATH);
         ObjectInputStream is = new ObjectInputStream(fis);
         ArrayList<Player> players = (ArrayList<Player>) is.readObject();
+        players.sort(Comparator.comparing(Player::getTime));
         is.close();
         fis.close();
         return players;
@@ -75,6 +76,11 @@ public class DataHandlerSingleton {
 
     public void remove(Player player) throws IOException, ClassNotFoundException {
         players.remove(player);
+        save(players);
+    }
+
+    public void remove(int position) throws IOException, ClassNotFoundException {
+        players.remove(position);
         save(players);
     }
 
