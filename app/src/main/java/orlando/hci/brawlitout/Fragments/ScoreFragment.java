@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import orlando.hci.brawlitout.Adapters.RecyclerAdapter;
+import orlando.hci.brawlitout.Adapters.ScoreboardAdapter;
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
 import orlando.hci.brawlitout.Utils.Player;
@@ -32,7 +32,7 @@ public class ScoreFragment extends Fragment {
     private ArrayList<Player> usersList;
     private RecyclerView recyclerView;
     private Context context;
-    RecyclerAdapter adapter;
+    ScoreboardAdapter adapter;
 
 
 
@@ -70,7 +70,7 @@ public class ScoreFragment extends Fragment {
     }
 
     private void setAdapter(){
-        adapter = new RecyclerAdapter(usersList);
+        adapter = new ScoreboardAdapter(usersList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -83,9 +83,6 @@ public class ScoreFragment extends Fragment {
         usersList = dataHandler.getPlayers();
         //todo: remove, this is a debug line
         dataHandler.add(new Player("name", (float) (Math.round((float)1.2345 *1000.0)/1000.0)));
-        usersList.forEach(x -> x.setTime((float) (Math.round(x.getTime()*1000.0)/1000.0)));
-        //usersList.add(new Player("name", (float) (Math.round((float)1.2345 *1000.0)/1000.0)));
-        //adapter.notifyItemInserted(usersList.size()-1);
 
         //LinkedHashMap preserve the ordering of elements in which they are inserted
 

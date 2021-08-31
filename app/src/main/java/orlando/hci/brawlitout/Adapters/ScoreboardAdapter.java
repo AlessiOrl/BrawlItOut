@@ -8,15 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.Player;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.MyViewHolder> {
     private ArrayList<Player> usersList;
 
-    public RecyclerAdapter(ArrayList<Player> usersList){
+    public ScoreboardAdapter(ArrayList<Player> usersList){
         this.usersList = usersList;
     }
 
@@ -44,14 +45,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String name = usersList.get(position).getName();
-        Float time = usersList.get(position).getTime();
+        double time = usersList.get(position).getTime();
 
         holder.place.setText(Integer.toString(position+1));
-        holder.place.setTextSize(30);
         holder.nameTxt.setText(name);
-        holder.nameTxt.setTextSize(30);
-        holder.time.setText(time.toString());
-        holder.time.setTextSize(30);
+        holder.time.setText(new DecimalFormat("#.###").format(time));
     }
 
     @Override

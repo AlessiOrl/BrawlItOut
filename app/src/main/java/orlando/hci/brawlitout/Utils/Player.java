@@ -8,15 +8,15 @@ public class Player implements Serializable {
 
 
     private String name;
-    private float time;
+    private double time;
 
     public Player(String name) {
 
         this.name = name;
-        this.time = (float) -1.0;
+        this.time = -1.0;
     }
 
-    public Player(String name, float time) {
+    public Player(String name, double time) {
 
         this.name = name;
         this.time = time;
@@ -27,7 +27,7 @@ public class Player implements Serializable {
         return name;
     }
 
-    public Float getTime() {
+    public double getTime() {
         return time;
     }
 
@@ -40,7 +40,7 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public void setTime(float time) {
+    public void setTime(double time) {
         this.time = time;
     }
 

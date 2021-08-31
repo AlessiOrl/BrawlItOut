@@ -32,6 +32,7 @@ import pl.droidsonroids.gif.GifImageButton;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
 
     private long starttime;
     private long endtime;
-    private float difference;
+    private double difference;
     private Button ss_btn;
     private Button r_btn;
     private GifImageButton imageButton;
@@ -58,9 +59,9 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
     private Float zTotal = (float) 0;
     private SensorManager sensorManager;
     private Sensor accelerometer, gyroscope;
-    private List<Float> xHistory = new ArrayList<Float>();
-    private List<Float> yHistory = new ArrayList<Float>();
-    private List<Float> zHistory = new ArrayList<Float>();
+    private List<Float> xHistory = new ArrayList<>();
+    private List<Float> yHistory = new ArrayList<>();
+    private List<Float> zHistory = new ArrayList<>();
     private Integer gameState = 0;
     private String username;
     private Player player;
@@ -99,6 +100,10 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         imageButton = (GifImageButton) root.findViewById(R.id.image_button);
         usernameTextE = (EditText) root.findViewById(R.id.edit_username);
         usernameTextV = (TextView) root.findViewById(R.id.text_username);
+
+        //todo:remove
+        Button debugButton = (Button) root.findViewById(R.id.degub_btn);
+
 
         if (factivity != null) {
             usernameTextV.setText(this.username);
@@ -148,6 +153,25 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        debugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    starttime = System.nanoTime();
+                    Thread.sleep(500);
+                    stopGame();
+                    saveScore();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -243,8 +267,8 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
                 " Y: " + yTotal +
                 " Z: " + zTotal);
         endtime = System.nanoTime();
-        difference = (float) ((endtime - starttime) / 1e3);
-        updateTime(difference / 1e3);
+        difference =  Math.floor(((endtime - starttime) / 1e9) * 1e6) / 1e6;
+        updateTime(difference);
 
     }
 
@@ -269,8 +293,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         if (updatedTime == -1) {
             result.setText("");
         } else {
-            DateFormat format = new SimpleDateFormat("ss.SSS");
-            String displayTime = format.format(updatedTime);
+            String displayTime = new DecimalFormat("#.###").format(updatedTime);
             result.setText(displayTime);
         }
     }
