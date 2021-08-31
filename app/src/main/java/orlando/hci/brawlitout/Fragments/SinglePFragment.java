@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
@@ -116,7 +117,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         RelativeLayout rl = (RelativeLayout) root.findViewById(R.id.single_relative);
 
         try {
-            dataHandler= DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -134,8 +135,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
             public void onClick(View v) {
                 if (factivity != null) {
                     player.setTime(difference);
-                    dataHandler.addmultiplayerscore(player);
-                    getFragmentManager().popBackStackImmediate();
+                    nextMultiGame(dataHandler.nextPlayer());
                 } else {
                     resetGame();
                 }
@@ -178,6 +178,29 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
         return root;
 
     }
+
+    private void nextMultiGame(Player nextPlayer) {
+        if (nextPlayer == null) {
+            scoreMultiGame();
+            return;
+        }
+        SinglePFragment singlePFragment = null;
+        try {
+            singlePFragment = new SinglePFragment(nextPlayer, getActivity());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment, singlePFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void scoreMultiGame() {
+        return;
+    }
+
 
     private void saveScore() throws IOException, ClassNotFoundException {
         if (factivity == null) this.username = usernameTextE.getText().toString();
@@ -267,7 +290,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
                 " Y: " + yTotal +
                 " Z: " + zTotal);
         endtime = System.nanoTime();
-        difference =  Math.floor(((endtime - starttime) / 1e9) * 1e6) / 1e6;
+        difference = Math.floor(((endtime - starttime) / 1e9) * 1e6) / 1e6;
         updateTime(difference);
 
     }

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class MultiPFragment extends Fragment {
 
-    private DataHandlerSingleton dataHandler ;
+    private DataHandlerSingleton dataHandler;
 
     private ArrayList<Player> multi_players = new ArrayList<>();
     private int playercount = 0;
@@ -39,6 +39,7 @@ public class MultiPFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_multi, container, false);
@@ -54,7 +55,7 @@ public class MultiPFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         try {
-            dataHandler= DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -68,7 +69,7 @@ public class MultiPFragment extends Fragment {
                 playercount += 1;
                 multi_players.add(new Player("Player " + (playercount)));
                 platerAdapter.notifyItemInserted(playercount);
-                nplayer_text.setText(""+playercount);
+                nplayer_text.setText("" + playercount);
             }
         });
 
@@ -79,27 +80,29 @@ public class MultiPFragment extends Fragment {
                 playercount -= 1;
                 multi_players.remove(playercount);
                 platerAdapter.notifyItemRemoved(playercount);
-                nplayer_text.setText(""+playercount);
+                nplayer_text.setText("" + playercount);
             }
         });
 
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (Player p : multi_players) {
-                    SinglePFragment singlePFragment = null;
-                    try {
-                        singlePFragment = new SinglePFragment(p, getActivity());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    FragmentTransaction fragmentTransaction =  getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.nav_host_fragment, singlePFragment);
-                    fragmentTransaction.commit();
-                }
+                dataHandler.addmultiplayerList(multi_players);
+                Player p = dataHandler.nextPlayer();
 
+                if (p == null) return; //todo: error message no players added
+
+                SinglePFragment singlePFragment = null;
+                try {
+                    singlePFragment = new SinglePFragment(p, getActivity());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, singlePFragment);
+                fragmentTransaction.commit();
             }
         });
         return root;

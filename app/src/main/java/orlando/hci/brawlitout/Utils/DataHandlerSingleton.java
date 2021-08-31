@@ -30,6 +30,7 @@ public class DataHandlerSingleton {
 
     private static DataHandlerSingleton instance = null;
     private ArrayList<Player> multiplayer = new ArrayList<>();
+    private int currentPlayer = 0;
     private ArrayList<Player> players;
     private Context context;
 
@@ -53,12 +54,13 @@ public class DataHandlerSingleton {
         save(players);
     }
 
-    public void addmultiplayerscore(Player player) {
-        this.multiplayer.add(player);
+    public void addmultiplayerList(ArrayList<Player> mpls) {
+        this.multiplayer = mpls;
     }
 
-    public void clearMultiPlayer() {
+    public void clearMultiplayerList() {
         this.multiplayer = new ArrayList<>();
+        this.currentPlayer = 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -71,7 +73,7 @@ public class DataHandlerSingleton {
         is.close();
         fis.close();
         return players;
-        
+
     }
 
     public void remove(Player player) throws IOException, ClassNotFoundException {
@@ -92,7 +94,16 @@ public class DataHandlerSingleton {
         fos.close();
     }
 
+    public Player nextPlayer() {
+        if (multiplayer.size() <= currentPlayer) return null;
+        return multiplayer.get(currentPlayer++);
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public ArrayList<Player> getMultiplayers() {
+        return multiplayer;
     }
 }

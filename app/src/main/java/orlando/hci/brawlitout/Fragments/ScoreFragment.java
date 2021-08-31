@@ -85,9 +85,6 @@ public class ScoreFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUserInfo() throws IOException, ClassNotFoundException {
 
-
-        //todo: remove, this is a debug line
-        dataHandler.add(new Player("name", (float) (Math.round((float)1.2345 *1000.0)/1000.0)));
         usersList = dataHandler.getPlayers();
         //LinkedHashMap preserve the ordering of elements in which they are inserted
 
