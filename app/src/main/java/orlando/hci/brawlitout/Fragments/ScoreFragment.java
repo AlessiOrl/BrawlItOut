@@ -1,6 +1,7 @@
 package orlando.hci.brawlitout.Fragments;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,15 +11,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import orlando.hci.brawlitout.Adapters.ScoreboardAdapter;
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
@@ -80,10 +85,10 @@ public class ScoreFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUserInfo() throws IOException, ClassNotFoundException {
 
-        usersList = dataHandler.getPlayers();
+
         //todo: remove, this is a debug line
         dataHandler.add(new Player("name", (float) (Math.round((float)1.2345 *1000.0)/1000.0)));
-
+        usersList = dataHandler.getPlayers();
         //LinkedHashMap preserve the ordering of elements in which they are inserted
 
 
@@ -98,17 +103,44 @@ public class ScoreFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
+            Player deletedPlayer = usersList.get(position);
             //usersList.remove(position);
             try {
                 dataHandler.remove(position);
+                adapter.notifyItemRemoved(position);
+                Snackbar.make(recyclerView, deletedPlayer+" removed", Snackbar.LENGTH_LONG)
+                .setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            dataHandler.add(deletedPlayer);
+                            adapter.notifyItemInserted(position);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            adapter.notifyItemRemoved(position);
+
             setAdapter();
 
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
+                    .addActionIcon(R.drawable.ic_trashcan)
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
 

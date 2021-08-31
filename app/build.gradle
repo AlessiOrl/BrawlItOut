@@ -59,5 +59,6 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 
 }
