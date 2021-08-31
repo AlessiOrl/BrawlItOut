@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.fragment.app.Fragment;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -65,7 +66,10 @@ public class DataHandlerSingleton {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<Player> load() throws IOException, ClassNotFoundException {
-        if (context.fileList().length == 0) save(new ArrayList<>());
+        //Check if file exists, if not create it
+        File file = context.getFileStreamPath(DATA_PATH);
+        if ( !file.exists()) save(new ArrayList<>());
+
         FileInputStream fis = context.openFileInput(DATA_PATH);
         ObjectInputStream is = new ObjectInputStream(fis);
         ArrayList<Player> players = (ArrayList<Player>) is.readObject();

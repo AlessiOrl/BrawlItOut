@@ -230,7 +230,7 @@ public class SinglePFragment extends Fragment implements SensorEventListener {
             yTotal = yHistory.stream().reduce((float) 0, (a, b) -> a + b);
             zTotal = zHistory.stream().reduce((float) 0, (a, b) -> a + b);
         }
-        if (gameState == 1 && (yTotal > 1100 || yTotal < -1100) && (zTotal < -100 || zTotal > 100)) {
+        if (gameState == 1 && (yTotal > 1000 || yTotal < -1000) && (zTotal < -100 || zTotal > 100)) {
             clearMovementHistory();
             gameState = 2;
 
