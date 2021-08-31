@@ -30,7 +30,9 @@ public class DataHandlerSingleton {
     public static final String DATA_PATH = "saved_data";
 
     private static DataHandlerSingleton instance = null;
+
     private ArrayList<Player> multiplayer = new ArrayList<>();
+
     private int currentPlayer = 0;
     private ArrayList<Player> players;
     private Context context;
@@ -54,6 +56,10 @@ public class DataHandlerSingleton {
         players.add(player);
         save(players);
     }
+    public void add(int position, Player player) throws IOException, ClassNotFoundException {
+        players.add(position, player);
+        save(players);
+    }
 
     public void addmultiplayerList(ArrayList<Player> mpls) {
         this.multiplayer = mpls;
@@ -73,7 +79,6 @@ public class DataHandlerSingleton {
         FileInputStream fis = context.openFileInput(DATA_PATH);
         ObjectInputStream is = new ObjectInputStream(fis);
         ArrayList<Player> players = (ArrayList<Player>) is.readObject();
-        players.sort(Comparator.comparing(Player::getTime));
         is.close();
         fis.close();
         return players;

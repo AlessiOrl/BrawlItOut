@@ -110,7 +110,7 @@ public class ScoreFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         try {
-                            dataHandler.add(deletedPlayer);
+                            dataHandler.add(position, deletedPlayer);
                             adapter.notifyItemInserted(position);
                         } catch (IOException e) {
                             e.printStackTrace();

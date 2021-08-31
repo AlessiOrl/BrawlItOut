@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.Player;
@@ -18,6 +19,7 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.My
     private ArrayList<Player> usersList;
 
     public ScoreboardAdapter(ArrayList<Player> usersList){
+        usersList.sort(Comparator.comparing(Player::getTime));
         this.usersList = usersList;
     }
 
