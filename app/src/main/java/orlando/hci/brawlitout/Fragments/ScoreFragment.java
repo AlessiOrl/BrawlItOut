@@ -91,7 +91,7 @@ public class ScoreFragment extends Fragment {
 
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -118,7 +118,7 @@ public class ScoreFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                });
+                }).show();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
