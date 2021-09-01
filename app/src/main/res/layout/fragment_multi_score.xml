@@ -7,11 +7,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/scoreboardMulti"
-        android:layout_width="408dp"
-        android:layout_height="636dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textAlignment="center"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/close_button"
