@@ -27,7 +27,6 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_textview"
             android:gravity="center"
-            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -44,8 +43,7 @@
             android:maxWidth="330dp"
             android:maxHeight="74dp"
             android:minHeight="48dp"
-            android:text="Player 1"
-            android:textColor="#000000" />
+            android:text="Player 1" />
 
         <TextView
             android:id="@+id/time"

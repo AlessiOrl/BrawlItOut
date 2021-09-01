@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_sound"
-    style="@style/CardView.Light"
+    style="?cardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -11,6 +11,7 @@
     android:layout_marginEnd="8dp"
     android:elevation="3dp"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
 
     >
 
@@ -28,8 +29,7 @@
         android:maxWidth="330dp"
         android:maxHeight="74dp"
         android:minHeight="48dp"
-        android:text="Player 1"
-        android:textColor="#000000" />
+        android:text="Player 1" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

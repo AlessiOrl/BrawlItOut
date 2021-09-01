@@ -40,7 +40,6 @@
             android:layout_marginTop="44dp"
             android:background="@drawable/my_button"
             android:text="@string/start"
-            android:textColor="@color/white"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
@@ -56,7 +55,6 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
             android:text="@string/reset"
-            android:textColor="@color/white"
             android:background="@drawable/my_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
@@ -110,7 +108,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:text="debug"
-            android:textColor="@color/white"
             android:background="@drawable/my_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
