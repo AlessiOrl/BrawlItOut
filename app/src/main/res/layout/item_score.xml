@@ -6,10 +6,10 @@
     style="@style/CardView.Light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="6dp"
     android:layout_marginBottom="6dp"
+    android:orientation="vertical"
     app:cardBackgroundColor="?android:attr/windowBackground"
-    android:orientation="vertical">
+    app:cardElevation="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
