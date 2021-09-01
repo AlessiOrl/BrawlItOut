@@ -78,7 +78,6 @@
             android:minHeight="48dp"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/chronometer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
@@ -86,55 +85,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.509" />
 
-        <TextView
-            android:id="@+id/text_username"
-            android:layout_width="266dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/chronometer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.543" />
-
-        <Button
-            android:id="@+id/degub_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="debug"
-            android:textColor="@color/white"
-            android:background="@drawable/my_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_reset" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
-
-        <pl.droidsonroids.gif.GifImageButton
-            android:id="@+id/image_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fadingEdge="horizontal|vertical"
-            android:scaleType="centerCrop"
-            android:src="@drawable/down_white"
-            android:visibility="gone"
-            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

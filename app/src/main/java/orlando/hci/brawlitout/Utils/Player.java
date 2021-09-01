@@ -9,17 +9,17 @@ public class Player implements Serializable {
 
     private String name;
     private double time;
+    private boolean saved;
 
     public Player(String name) {
-
-        this.name = name;
-        this.time = -1.0;
+        this(name, -1.0);
     }
 
     public Player(String name, double time) {
 
         this.name = name;
         this.time = time;
+        this.saved = false;
     }
 
 
@@ -44,4 +44,11 @@ public class Player implements Serializable {
         this.time = time;
     }
 
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
 }

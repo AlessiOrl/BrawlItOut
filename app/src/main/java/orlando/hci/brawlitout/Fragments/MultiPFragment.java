@@ -39,13 +39,23 @@ public class MultiPFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         setHasOptionsMenu(true);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_multi, container, false);
+
+
         up_btn = root.findViewById(R.id.up_btn);
         down_btn = root.findViewById(R.id.down_btn);
         start_btn = root.findViewById(R.id.btn_start);
@@ -56,14 +66,6 @@ public class MultiPFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(platerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        try {
-            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
 
         up_btn.setOnClickListener(new View.OnClickListener() {
@@ -91,20 +93,15 @@ public class MultiPFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dataHandler.addmultiplayerList(multi_players);
-                Player p = dataHandler.nextPlayer();
 
-                if (p == null) return; //todo: error message no players added
+                if (dataHandler.getMultiplayers().isEmpty())
+                    return; //todo: error message no players added
 
-                SinglePFragment singlePFragment = null;
-                try {
-                    singlePFragment = new SinglePFragment(p, getActivity());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                MultiSinglePFragment multisinglePFragment = null;
+                multisinglePFragment = new MultiSinglePFragment();
+
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment, singlePFragment);
+                fragmentTransaction.replace(R.id.nav_host_fragment, multisinglePFragment);
                 fragmentTransaction.commit();
             }
         });

@@ -29,6 +29,7 @@ import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
 import orlando.hci.brawlitout.Utils.Player;
 
+//TODO: add multiplayer implementation
 public class ScoreFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
@@ -42,7 +43,15 @@ public class ScoreFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        //setContentView(R.layout.fragment_score);
+        try {
+            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+            setUserInfo();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -55,15 +64,7 @@ public class ScoreFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        try {
-            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
-            setUserInfo();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         setAdapter();
 
         return root;

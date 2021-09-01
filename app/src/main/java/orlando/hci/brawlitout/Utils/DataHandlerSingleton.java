@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,10 +32,11 @@ public class DataHandlerSingleton {
 
     private static DataHandlerSingleton instance = null;
 
-    private ArrayList<Player> multiplayer = new ArrayList<>();
-
-    private int currentPlayer = 0;
     private ArrayList<Player> players;
+    private ArrayList<Player> multiplayer = new ArrayList<>();
+    private FragmentActivity currentFragmentActivity;
+    private Player currentPlayer = null;
+    private int currentPlayerIndex = 0;
     private Context context;
 
     // Costruttore invisibile
@@ -68,7 +70,7 @@ public class DataHandlerSingleton {
 
     public void clearMultiplayerList() {
         this.multiplayer = new ArrayList<>();
-        this.currentPlayer = 0;
+        this.currentPlayerIndex = 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -105,8 +107,20 @@ public class DataHandlerSingleton {
     }
 
     public Player nextPlayer() {
-        if (multiplayer.size() <= currentPlayer) return null;
-        return multiplayer.get(currentPlayer++);
+        if (multiplayer.size() <= currentPlayerIndex) return null;
+        return multiplayer.get(currentPlayerIndex++);
+    }
+
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -116,4 +130,17 @@ public class DataHandlerSingleton {
     public ArrayList<Player> getMultiplayers() {
         return multiplayer;
     }
+
+    public void clearCurrentPlayer() {
+        this.currentPlayer = null;
+    }
+
+    public void getCurrentFragmentActivity(FragmentActivity frag) {
+        this.currentFragmentActivity = frag;
+    }
+
+    public void setCurrentFragmentActivity(FragmentActivity frag) {
+        this.currentFragmentActivity = frag;
+    }
 }
+
