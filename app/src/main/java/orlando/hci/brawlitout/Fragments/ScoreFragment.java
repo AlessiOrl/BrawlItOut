@@ -45,7 +45,7 @@ public class ScoreFragment extends Fragment {
         setHasOptionsMenu(true);
         try {
             dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
-            setUserInfo();
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,9 +78,7 @@ public class ScoreFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setUserInfo() throws IOException, ClassNotFoundException {
-    }
+
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
