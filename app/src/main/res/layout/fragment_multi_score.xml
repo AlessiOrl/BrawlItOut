@@ -22,11 +22,10 @@
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
-        android:background="@drawable/my_button"
+        android:layout_marginBottom="24dp"
         android:text="CLOSE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/my_button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

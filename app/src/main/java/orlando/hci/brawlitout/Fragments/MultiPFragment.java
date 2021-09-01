@@ -22,8 +22,6 @@ import orlando.hci.brawlitout.R;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//TODO: add in datahandler the fragment state
-
 public class MultiPFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
@@ -100,44 +98,28 @@ public class MultiPFragment extends Fragment {
                     return; //todo: error message no players added
                 dataHandler.setCurrentMultiPlayer(dataHandler.nextPlayer());
                 dataHandler.setIsmultirunning(true);
+                clearGame();
                 startgame();
-
             }
         });
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (dataHandler.showScore()) {
-            showScore();
-        }
-        updateView();
-    }
-
-
     private void updateView() {
         playerAdapter.notifyItemRangeChanged(0, playercount);
     }
 
-    public void startgame() {
+    public void clearGame() {
         playercount = 0;
         multiplayer_list = new ArrayList<>();
         nplayer_text.setText("");
-        MultiSinglePFragment multisinglePFragment = new MultiSinglePFragment();
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment, multisinglePFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
     }
 
-    private void showScore() {
-        ScoreMultiFragment scoremultiFragment = new ScoreMultiFragment();
-        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment, scoremultiFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+    public void startgame() {
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, new MultiSinglePFragment())
+                .addToBackStack(null)
+                .commit();
     }
-
 }

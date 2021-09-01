@@ -64,6 +64,7 @@ public class MultiSinglePFragment extends Fragment {
         }
     }
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_multi_single, container, false);
@@ -77,7 +78,7 @@ public class MultiSinglePFragment extends Fragment {
         ss_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //if next
-                if (checkEnd()) {
+                    if (checkEnd()) {
                     nextGame();
                 } else {
                     startGame();
@@ -107,7 +108,7 @@ public class MultiSinglePFragment extends Fragment {
     private void endgame() {
         dataHandler.setshowScore(true);
         dataHandler.setIsmultirunning(false);
-        getActivity().getSupportFragmentManager().popBackStack();
+        showScore();
     }
 
     private void saveScore(Player player) throws IOException, ClassNotFoundException {
@@ -145,5 +146,12 @@ public class MultiSinglePFragment extends Fragment {
         return this.player != null && this.player.getTime() > 0;
     }
 
+    private void showScore() {
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, new ScoreMultiFragment())
+                .addToBackStack(null)
+                .commit();
+    }
 
 }

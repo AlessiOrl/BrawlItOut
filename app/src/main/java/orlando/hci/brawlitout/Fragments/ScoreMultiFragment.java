@@ -11,6 +11,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,9 +60,10 @@ public class ScoreMultiFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dataHandler.setIsmultirunning(false);
-                getActivity().getSupportFragmentManager().popBackStack();
                 dataHandler.setshowScore(false);
                 dataHandler.clearMultiplayerList();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
+
             }
         });
         return root;

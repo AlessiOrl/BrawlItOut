@@ -18,7 +18,7 @@ import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
-
+//TODO: override back button
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -41,6 +41,20 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
 
     }
 }
