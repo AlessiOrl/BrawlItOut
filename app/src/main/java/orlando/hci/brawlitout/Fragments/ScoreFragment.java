@@ -46,7 +46,6 @@ public class ScoreFragment extends Fragment {
         try {
             dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
 
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

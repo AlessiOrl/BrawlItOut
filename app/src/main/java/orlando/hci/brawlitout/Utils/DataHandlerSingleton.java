@@ -34,10 +34,13 @@ public class DataHandlerSingleton {
 
     private ArrayList<Player> players;
     private ArrayList<Player> multiplayer = new ArrayList<>();
-    private FragmentActivity currentFragmentActivity;
+    private boolean ismultirunning;
     private Player currentPlayer = null;
+    private Player currentmultiPlayer = null;
+
     private int currentPlayerIndex = 0;
     private Context context;
+    private boolean showScore;
 
     // Costruttore invisibile
     private DataHandlerSingleton(Context context) throws IOException, ClassNotFoundException {
@@ -64,11 +67,8 @@ public class DataHandlerSingleton {
         save(players);
     }
 
-    public void addmultiplayerList(ArrayList<Player> mpls) {
-        this.multiplayer = mpls;
-    }
-
     public void clearMultiplayerList() {
+        this.ismultirunning = false;
         this.multiplayer = new ArrayList<>();
         this.currentPlayerIndex = 0;
     }
@@ -115,12 +115,20 @@ public class DataHandlerSingleton {
         this.currentPlayer = player;
     }
 
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
-    }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void setCurrentMultiPlayer(Player player) {
+        this.currentmultiPlayer = player;
+    }
+
+    public Player getCurrentMultiPlayer() {
+        return currentmultiPlayer;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -135,12 +143,25 @@ public class DataHandlerSingleton {
         this.currentPlayer = null;
     }
 
-    public void getCurrentFragmentActivity(FragmentActivity frag) {
-        this.currentFragmentActivity = frag;
+
+    public void setIsmultirunning(boolean ismultirunning) {
+        this.ismultirunning = ismultirunning;
     }
 
-    public void setCurrentFragmentActivity(FragmentActivity frag) {
-        this.currentFragmentActivity = frag;
+    public boolean Ismultirunning() {
+        return this.ismultirunning;
+    }
+
+    public void setshowScore(boolean showScore) {
+        this.showScore = showScore;
+    }
+
+    public boolean showScore() {
+        return this.showScore;
+    }
+
+    public void setmultiplayerlist(ArrayList<Player> multi) {
+        this.multiplayer = multi;
     }
 }
 

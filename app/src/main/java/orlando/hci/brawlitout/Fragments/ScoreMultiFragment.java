@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -25,6 +26,7 @@ public class ScoreMultiFragment extends Fragment {
     private DataHandlerSingleton dataHandler;
 
     private RecyclerView recyclerView;
+    private Button close_btn;
     private Context context;
     ScoreboardAdapter adapter;
 
@@ -35,14 +37,11 @@ public class ScoreMultiFragment extends Fragment {
         setHasOptionsMenu(true);
         try {
             dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
-            //setUserInfo();
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -50,9 +49,21 @@ public class ScoreMultiFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
-        View root = inflater.inflate(R.layout.fragment_score, container, false);
-        recyclerView = root.findViewById(R.id.recyclerView);
+        View root = inflater.inflate(R.layout.fragment_multi_score, container, false);
+        recyclerView = root.findViewById(R.id.scoreboardMulti);
+        close_btn = root.findViewById(R.id.close_button);
+
         setAdapter();
+
+        close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataHandler.setIsmultirunning(false);
+                getActivity().getSupportFragmentManager().popBackStack();
+                dataHandler.setshowScore(false);
+                dataHandler.clearMultiplayerList();
+            }
+        });
         return root;
     }
 

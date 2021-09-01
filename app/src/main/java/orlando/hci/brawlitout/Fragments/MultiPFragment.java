@@ -28,28 +28,31 @@ public class MultiPFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
 
-    private ArrayList<Player> multi_players = new ArrayList<>();
+    private ArrayList<Player> multiplayer_list = new ArrayList<>();
     private int playercount = 0;
     private Button up_btn;
     private Button down_btn;
     private Button start_btn;
     private TextView nplayer_text;
-    private PlayerAdapter platerAdapter;
+    private PlayerAdapter playerAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         try {
-            dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
+            this.dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
+        if (this.dataHandler.Ismultirunning()) startgame();
+
         setHasOptionsMenu(true);
     }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,9 +65,9 @@ public class MultiPFragment extends Fragment {
         nplayer_text = root.findViewById(R.id.player_nmbr);
         RecyclerView recyclerView = root.findViewById(R.id.player_recyclerview);
 
-        this.platerAdapter = new PlayerAdapter(multi_players);
+        this.playerAdapter = new PlayerAdapter(multiplayer_list);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(platerAdapter);
+        recyclerView.setAdapter(playerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
@@ -72,8 +75,8 @@ public class MultiPFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 playercount += 1;
-                multi_players.add(new Player("Player " + (playercount)));
-                platerAdapter.notifyItemInserted(playercount);
+                multiplayer_list.add(new Player("Player " + (playercount)));
+                playerAdapter.notifyItemInserted(playercount);
                 nplayer_text.setText("" + playercount);
             }
         });
@@ -83,8 +86,8 @@ public class MultiPFragment extends Fragment {
             public void onClick(View view) {
                 if (playercount == 0) return;
                 playercount -= 1;
-                multi_players.remove(playercount);
-                platerAdapter.notifyItemRemoved(playercount);
+                multiplayer_list.remove(playercount);
+                playerAdapter.notifyItemRemoved(playercount);
                 nplayer_text.setText("" + playercount);
             }
         });
@@ -92,20 +95,49 @@ public class MultiPFragment extends Fragment {
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataHandler.addmultiplayerList(multi_players);
-
+                dataHandler.setmultiplayerlist(multiplayer_list);
                 if (dataHandler.getMultiplayers().isEmpty())
                     return; //todo: error message no players added
+                dataHandler.setCurrentMultiPlayer(dataHandler.nextPlayer());
+                dataHandler.setIsmultirunning(true);
+                startgame();
 
-                MultiSinglePFragment multisinglePFragment = null;
-                multisinglePFragment = new MultiSinglePFragment();
-
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment, multisinglePFragment);
-                fragmentTransaction.commit();
             }
         });
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (dataHandler.showScore()) {
+            showScore();
+        }
+        updateView();
+    }
+
+
+    private void updateView() {
+        playerAdapter.notifyItemRangeChanged(0, playercount);
+    }
+
+    public void startgame() {
+        playercount = 0;
+        multiplayer_list = new ArrayList<>();
+        nplayer_text.setText("");
+        MultiSinglePFragment multisinglePFragment = new MultiSinglePFragment();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment, multisinglePFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void showScore() {
+        ScoreMultiFragment scoremultiFragment = new ScoreMultiFragment();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment, scoremultiFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 }

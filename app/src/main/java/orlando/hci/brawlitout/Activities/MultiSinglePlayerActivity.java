@@ -26,7 +26,7 @@ import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
 import pl.droidsonroids.gif.GifImageButton;
 
-public class SinglePlayerActivity extends AppCompatActivity implements SensorEventListener, Window.Callback {
+public class MultiSinglePlayerActivity extends AppCompatActivity implements SensorEventListener, Window.Callback {
 
     private DataHandlerSingleton dataHandler;
     private GifImageButton imageButton;
@@ -36,7 +36,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
     private String username;
     private boolean isMulti;
 
-    private static final String TAG = "SinglePlayerActivity";
+    private static final String TAG = "MultiSinglePlayerActivity";
     private Float xTotal = (float) 0;
     private Float yTotal = (float) 0;
     private Float zTotal = (float) 0;
@@ -185,7 +185,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
     }
 
     private void saveScore() throws IOException, ClassNotFoundException {
-        dataHandler.getCurrentPlayer().setTime(difference);
+        dataHandler.getCurrentMultiPlayer().setTime(difference);
     }
 
     private void startGame() {

@@ -22,10 +22,5 @@
         android:label="@string/title_score"
         tools:layout="@layout/fragment_score" />
 
-    <fragment
-        android:id="@+id/navigation_info"
-        android:name="orlando.hci.brawlitout.Fragments.InfosFragment"
-        android:label="@string/title_info"
-        tools:layout="@layout/fragment_info" />
 
 </navigation>
