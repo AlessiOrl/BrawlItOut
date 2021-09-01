@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_sound"
     style="?cardViewStyle"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -29,7 +31,8 @@
         android:maxWidth="330dp"
         android:maxHeight="74dp"
         android:minHeight="48dp"
-        android:text="Player 1" />
+        android:text="Player 1"
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

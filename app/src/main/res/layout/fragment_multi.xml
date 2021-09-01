@@ -22,6 +22,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/my_button"
         android:text="@string/down"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/up_btn"
         app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
         android:layout_marginEnd="112dp"
         android:background="@drawable/my_button"
         android:text="@string/up"
-
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lable1" />
 
@@ -81,12 +82,14 @@
         android:layout_height="48dp"
         android:layout_marginBottom="16dp"
         android:text="@string/start"
+        android:textColor="@color/white"
         android:background="@drawable/my_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/smartRefreshLayout"
+
         app:layout_constraintVertical_bias="0.158" />
 
     <TextView
