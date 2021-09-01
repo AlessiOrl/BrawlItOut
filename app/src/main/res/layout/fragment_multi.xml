@@ -17,24 +17,25 @@
 
     <Button
         android:id="@+id/down_btn"
-        android:layout_width="56dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/my_button"
         android:text="@string/down"
         app:layout_constraintEnd_toStartOf="@+id/up_btn"
-        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/lable1" />
 
     <Button
         android:id="@+id/up_btn"
-        android:layout_width="56dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="100dp"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="112dp"
+        android:background="@drawable/my_button"
         android:text="@string/up"
-        android:background="@color/colorPrimary"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lable1" />
 
@@ -80,6 +81,7 @@
         android:layout_height="48dp"
         android:layout_marginBottom="16dp"
         android:text="@string/start"
+        android:background="@drawable/my_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
