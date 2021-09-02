@@ -61,7 +61,7 @@ public class MultiSinglePFragment extends Fragment {
 
                 if (doubleBackToExitPressedOnce) {
                     dataHandler.setIsmultirunning(false);
-                    dataHandler.clearMultiplayerList();
+                    dataHandler.restartMultiGame();
                     getActivity().getSupportFragmentManager().popBackStackImmediate();
                     return;
                 }

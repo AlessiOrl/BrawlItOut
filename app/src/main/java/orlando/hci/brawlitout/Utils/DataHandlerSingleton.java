@@ -164,5 +164,13 @@ public class DataHandlerSingleton {
         clearMultiplayerList();
         this.multiplayer = multi;
     }
+
+    public void restartMultiGame() {
+        this.currentPlayerIndex = 0;
+        this.currentmultiPlayer = null;
+        for (Player p : this.multiplayer) {
+            p.setTime(-1.0);
+        }
+    }
 }
 

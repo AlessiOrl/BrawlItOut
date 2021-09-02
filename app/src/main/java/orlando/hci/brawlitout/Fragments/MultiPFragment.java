@@ -27,7 +27,6 @@ public class MultiPFragment extends Fragment {
     private DataHandlerSingleton dataHandler;
 
     private ArrayList<Player> multiplayer_list;
-    private int playercount;
     private Button up_btn;
     private Button down_btn;
     private Button start_btn;
@@ -38,16 +37,16 @@ public class MultiPFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //todo: save state on view change
         updateView();
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         multiplayer_list = new ArrayList<>();
-        playercount = 0;
+
+
         try {
             this.dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
         } catch (IOException e) {
@@ -55,6 +54,7 @@ public class MultiPFragment extends Fragment {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
 
         setHasOptionsMenu(true);
     }
@@ -71,42 +71,40 @@ public class MultiPFragment extends Fragment {
         nplayer_text = root.findViewById(R.id.player_nmbr);
         RecyclerView recyclerView = root.findViewById(R.id.player_recyclerview);
 
-        this.playerAdapter = new PlayerAdapter(multiplayer_list);
+        this.playerAdapter = new PlayerAdapter(dataHandler.getMultiplayers());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(playerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
+        updateView();
         up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playercount += 1;
-                multiplayer_list.add(new Player("Player " + (playercount)));
-                playerAdapter.notifyItemInserted(playercount);
-                nplayer_text.setText("" + playercount);
+                dataHandler.getMultiplayers().add(new Player("Player " + (dataHandler.getMultiplayers().size() + 1)));
+                playerAdapter.notifyItemInserted(dataHandler.getMultiplayers().size());
+                nplayer_text.setText("" + dataHandler.getMultiplayers().size());
             }
         });
 
         down_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (playercount == 0) return;
-                playercount -= 1;
-                multiplayer_list.remove(playercount);
-                playerAdapter.notifyItemRemoved(playercount);
-                nplayer_text.setText("" + playercount);
+                if (dataHandler.getMultiplayers().size() == 0) return;
+                dataHandler.getMultiplayers().remove(dataHandler.getMultiplayers().size() - 1);
+                playerAdapter.notifyItemRemoved(dataHandler.getMultiplayers().size());
+                nplayer_text.setText("" + dataHandler.getMultiplayers().size());
             }
         });
 
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataHandler.setmultiplayerlist(multiplayer_list);
+                //dataHandler.setmultiplayerlist(multiplayer_list);
                 if (dataHandler.getMultiplayers().isEmpty())
                     return; //todo: error message no players added
                 dataHandler.setCurrentMultiPlayer(dataHandler.nextPlayer());
                 dataHandler.setIsmultirunning(true);
-                clearGame();
+                //clearGame();
                 startgame();
             }
         });
@@ -114,12 +112,14 @@ public class MultiPFragment extends Fragment {
     }
 
     private void updateView() {
+        if (nplayer_text != null)
+            nplayer_text.setText(Integer.toString(dataHandler.getMultiplayers().size()));
         playerAdapter.notifyDataSetChanged();
     }
 
     public void clearGame() {
-        playercount = 0;
-        multiplayer_list = new ArrayList<>();
+        dataHandler.setmultiplayerlist(new ArrayList<>());
+        //multiplayer_list = new ArrayList<>();
         nplayer_text.setText("");
     }
 
