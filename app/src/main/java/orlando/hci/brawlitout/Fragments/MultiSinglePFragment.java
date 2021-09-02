@@ -2,22 +2,25 @@ package orlando.hci.brawlitout.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 
 import orlando.hci.brawlitout.Activities.MultiSinglePlayerActivity;
+import orlando.hci.brawlitout.Activities.MultiScoreActivity;
 import orlando.hci.brawlitout.Activities.SinglePlayerActivity;
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
@@ -31,7 +34,7 @@ public class MultiSinglePFragment extends Fragment {
     private TextView result;
     private TextView usernameTextV;
 
-
+    boolean doubleBackToExitPressedOnce = false;
     //private String username;
     private Player player;
 
@@ -46,6 +49,38 @@ public class MultiSinglePFragment extends Fragment {
             e.printStackTrace();
         }
 
+
+
+
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if (doubleBackToExitPressedOnce) {
+                    dataHandler.setIsmultirunning(false);
+                    dataHandler.clearMultiplayerList();
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                    return;
+                }
+                doubleBackToExitPressedOnce = true;
+                Toast.makeText(getActivity().getApplicationContext(), "Please click BACK again to end the game", Toast.LENGTH_SHORT).show();
+
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 2000);
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        // The callback can be enabled or disabled here or in handleOnBackPressed()
         setHasOptionsMenu(true);
     }
 
@@ -62,12 +97,17 @@ public class MultiSinglePFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+        if (!dataHandler.Ismultirunning() && !dataHandler.showScore()) getActivity().getSupportFragmentManager().popBackStack();
+
     }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_multi_single, container, false);
+
+
+
 
         MultiSinglePFragment thisf = this;
         ss_btn = (Button) root.findViewById(R.id.button_start);
@@ -78,8 +118,12 @@ public class MultiSinglePFragment extends Fragment {
         ss_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //if next
-                    if (checkEnd()) {
-                    nextGame();
+                if (checkEnd()) {
+                    try {
+                        nextGame();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     startGame();
                 }
@@ -95,7 +139,7 @@ public class MultiSinglePFragment extends Fragment {
         startActivity(myIntent);
     }
 
-    private void nextGame() {
+    private void nextGame() throws InterruptedException {
         this.player = dataHandler.nextPlayer();
         if (this.player == null) {
             endgame();
@@ -105,7 +149,7 @@ public class MultiSinglePFragment extends Fragment {
         updateView(player.getName(), player.getTime());
     }
 
-    private void endgame() {
+    private void endgame() throws InterruptedException {
         dataHandler.setshowScore(true);
         dataHandler.setIsmultirunning(false);
         showScore();
@@ -146,12 +190,9 @@ public class MultiSinglePFragment extends Fragment {
         return this.player != null && this.player.getTime() > 0;
     }
 
-    private void showScore() {
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.nav_host_fragment, new ScoreMultiFragment())
-                .addToBackStack(null)
-                .commit();
+    private void showScore() throws InterruptedException {
+        Intent myIntent = new Intent(getActivity(), MultiScoreActivity.class);
+        startActivity(myIntent);
     }
 
 }

@@ -26,18 +26,28 @@ public class MultiPFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
 
-    private ArrayList<Player> multiplayer_list = new ArrayList<>();
-    private int playercount = 0;
+    private ArrayList<Player> multiplayer_list;
+    private int playercount;
     private Button up_btn;
     private Button down_btn;
     private Button start_btn;
     private TextView nplayer_text;
     private PlayerAdapter playerAdapter;
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //todo: save state on view change
+        updateView();
+
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        multiplayer_list = new ArrayList<>();
+        playercount = 0;
         try {
             this.dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
         } catch (IOException e) {
@@ -45,8 +55,6 @@ public class MultiPFragment extends Fragment {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        if (this.dataHandler.Ismultirunning()) startgame();
 
         setHasOptionsMenu(true);
     }
@@ -56,7 +64,7 @@ public class MultiPFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_multi, container, false);
 
-
+        if (dataHandler.Ismultirunning()) startgame();
         up_btn = root.findViewById(R.id.up_btn);
         down_btn = root.findViewById(R.id.down_btn);
         start_btn = root.findViewById(R.id.btn_start);
@@ -106,7 +114,7 @@ public class MultiPFragment extends Fragment {
     }
 
     private void updateView() {
-        playerAdapter.notifyItemRangeChanged(0, playercount);
+        playerAdapter.notifyDataSetChanged();
     }
 
     public void clearGame() {
@@ -119,7 +127,9 @@ public class MultiPFragment extends Fragment {
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, new MultiSinglePFragment())
-                .addToBackStack(null)
+                .setReorderingAllowed(true)
+                .addToBackStack("start")
                 .commit();
     }
+
 }

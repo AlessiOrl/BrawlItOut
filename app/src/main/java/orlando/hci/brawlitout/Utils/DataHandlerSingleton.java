@@ -161,6 +161,7 @@ public class DataHandlerSingleton {
     }
 
     public void setmultiplayerlist(ArrayList<Player> multi) {
+        clearMultiplayerList();
         this.multiplayer = multi;
     }
 }
