@@ -59,6 +59,7 @@ public class DataHandlerSingleton {
 
     public void add(Player player) throws IOException, ClassNotFoundException {
         players.add(player);
+        if (players.size() > 20) players.remove(20);
         save(players);
     }
 
