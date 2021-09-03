@@ -1,6 +1,5 @@
 package orlando.hci.brawlitout.Fragments;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import orlando.hci.brawlitout.Adapters.ScoreboardAdapter;
@@ -35,7 +33,6 @@ public class ScoreFragment extends Fragment {
     private DataHandlerSingleton dataHandler;
 
     private RecyclerView recyclerView;
-    private Context context;
     ScoreboardAdapter adapter;
 
 
@@ -46,9 +43,7 @@ public class ScoreFragment extends Fragment {
         try {
             dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -58,7 +53,7 @@ public class ScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        context = getActivity().getApplicationContext();
+        getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_score, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -94,23 +89,16 @@ public class ScoreFragment extends Fragment {
                 dataHandler.remove(position);
                 adapter.notifyItemRemoved(position);
                 Snackbar.make(recyclerView, deletedPlayer + " removed", Snackbar.LENGTH_LONG)
-                        .setAction("Undo", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                try {
-                                    dataHandler.add(position, deletedPlayer);
-                                    //adapter.notifyItemRangeChanged(position, dataHandler.getPlayers().size() - position); efficient but not cool
-                                    adapter.notifyDataSetChanged(); //cool but not efficient
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
+                        .setAction("Undo", v -> {
+                            try {
+                                dataHandler.add(position, deletedPlayer);
+                                //adapter.notifyItemRangeChanged(position, dataHandler.getPlayers().size() - position); efficient but not cool
+                                adapter.notifyDataSetChanged(); //cool but not efficient
+                            } catch (IOException | ClassNotFoundException e) {
+                                e.printStackTrace();
                             }
                         }).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
 
@@ -121,8 +109,8 @@ public class ScoreFragment extends Fragment {
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
-                    .addActionIcon(R.drawable.ic_trashcan)
+                    .addBackgroundColor(ContextCompat.getColor(getContext(), R.color.remove))
+                    .addActionIcon(R.drawable.round_delete_forever_24)
                     .create()
                     .decorate();
 

@@ -6,27 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import orlando.hci.brawlitout.Adapters.PlayerAdapter;
-import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
-import orlando.hci.brawlitout.Utils.Player;
-import orlando.hci.brawlitout.R;
-
 import java.io.IOException;
 import java.util.ArrayList;
+
+import orlando.hci.brawlitout.Adapters.PlayerAdapter;
+import orlando.hci.brawlitout.R;
+import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
+import orlando.hci.brawlitout.Utils.Player;
 
 public class MultiPFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
 
-    private ArrayList<Player> multiplayer_list;
     private Button up_btn;
     private Button down_btn;
     private Button start_btn;
@@ -44,14 +43,10 @@ public class MultiPFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        multiplayer_list = new ArrayList<>();
-
 
         try {
             this.dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -70,46 +65,43 @@ public class MultiPFragment extends Fragment {
         start_btn = root.findViewById(R.id.btn_start);
         nplayer_text = root.findViewById(R.id.player_nmbr);
         RecyclerView recyclerView = root.findViewById(R.id.player_recyclerview);
-
         this.playerAdapter = new PlayerAdapter(dataHandler.getMultiplayers());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(playerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateView();
-        up_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dataHandler.getMultiplayers().size() == 20) return;
-                dataHandler.getMultiplayers().add(new Player("Player " + (dataHandler.getMultiplayers().size() + 1)));
-                playerAdapter.notifyItemInserted(dataHandler.getMultiplayers().size());
+        up_btn.setOnClickListener(view -> {
+            if (dataHandler.getMultiplayers().size() == 20) return;
+            dataHandler.getMultiplayers().add(new Player("Player " + (dataHandler.getMultiplayers().size() + 1)));
+            playerAdapter.notifyItemInserted(dataHandler.getMultiplayers().size());
+            nplayer_text.setText("" + dataHandler.getMultiplayers().size());
+
+
+        });
+
+        down_btn.setOnClickListener(view -> {
+            if (dataHandler.getMultiplayers().size() == 0 || dataHandler.getMultiplayers().size() == 1 && dataHandler.getMultiplayers().get(0).getName().equals("Player 1"))
+                return;
+            dataHandler.getMultiplayers().remove(dataHandler.getMultiplayers().size() - 1);
+            playerAdapter.notifyItemRemoved(dataHandler.getMultiplayers().size());
+            if (dataHandler.getMultiplayers().size() == 0) {
+                up_btn.performClick();
+            } else {
                 nplayer_text.setText("" + dataHandler.getMultiplayers().size());
-
-
             }
         });
 
-        down_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dataHandler.getMultiplayers().size() == 0) return;
-                dataHandler.getMultiplayers().remove(dataHandler.getMultiplayers().size() - 1);
-                playerAdapter.notifyItemRemoved(dataHandler.getMultiplayers().size());
-                nplayer_text.setText("" + dataHandler.getMultiplayers().size());
+        start_btn.setOnClickListener(view -> {
+            //dataHandler.setmultiplayerlist(multiplayer_list);
+            if (dataHandler.getMultiplayers().isEmpty()) {
+                Toast.makeText(getActivity().getApplicationContext(), R.string.error_no_player, Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
-
-        start_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //dataHandler.setmultiplayerlist(multiplayer_list);
-                if (dataHandler.getMultiplayers().isEmpty())
-                    return; //todo: error message no players added
-                dataHandler.setCurrentMultiPlayer(dataHandler.nextPlayer());
-                dataHandler.setIsmultirunning(true);
-                //clearGame();
-                startgame();
-            }
+            dataHandler.setCurrentMultiPlayer(dataHandler.nextPlayer());
+            dataHandler.setIsmultirunning(true);
+            //clearGame();
+            startgame();
         });
         return root;
     }
@@ -118,12 +110,6 @@ public class MultiPFragment extends Fragment {
         if (nplayer_text != null)
             nplayer_text.setText(Integer.toString(dataHandler.getMultiplayers().size()));
         playerAdapter.notifyDataSetChanged();
-    }
-
-    public void clearGame() {
-        dataHandler.setmultiplayerlist(new ArrayList<>());
-        //multiplayer_list = new ArrayList<>();
-        nplayer_text.setText("");
     }
 
     public void startgame() {

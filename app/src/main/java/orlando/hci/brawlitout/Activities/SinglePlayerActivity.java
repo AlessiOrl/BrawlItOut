@@ -13,7 +13,6 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,19 +32,20 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
     private long starttime;
     private long endtime;
     private double difference;
-    private String username;
-    private boolean isMulti;
 
     private static final String TAG = "SinglePlayerActivity";
     private Float xTotal = (float) 0;
     private Float yTotal = (float) 0;
     private Float zTotal = (float) 0;
     private SensorManager sensorManager;
-    private Sensor accelerometer, gyroscope;
-    private List<Float> xHistory = new ArrayList<>();
-    private List<Float> yHistory = new ArrayList<>();
-    private List<Float> zHistory = new ArrayList<>();
+    private Sensor accelerometer;
+    private final List<Float> xHistory = new ArrayList<>();
+    private final List<Float> yHistory = new ArrayList<>();
+    private final List<Float> zHistory = new ArrayList<>();
     private Integer gameState = 0;
+
+    public SinglePlayerActivity() {
+    }
 
 
     @Override
@@ -54,31 +54,27 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
         setContentView(R.layout.single_player_activity);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        imageButton = (GifImageButton) findViewById(R.id.image_button);
+        sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        imageButton = findViewById(R.id.image_button);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
 
         imageButton.setClickable(false);
         try {
             dataHandler = DataHandlerSingleton.getInstance(getApplicationContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                stopGame();
-                imageButtonEndState();
-                try {
-                    saveScore();
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                finish();
+        imageButton.setOnClickListener(v -> {
+            stopGame();
+            imageButtonEndState();
+            try {
+                saveScore();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
+            finish();
         });
 
 
@@ -110,9 +106,9 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
             yHistory.add(event.values[1]);
             if (zHistory.size() > 200) zHistory.remove(0);
             zHistory.add(event.values[2]);
-            xTotal = xHistory.stream().reduce((float) 0, (a, b) -> a + b);
-            yTotal = yHistory.stream().reduce((float) 0, (a, b) -> a + b);
-            zTotal = zHistory.stream().reduce((float) 0, (a, b) -> a + b);
+            xTotal = xHistory.stream().reduce((float) 0, Float::sum);
+            yTotal = yHistory.stream().reduce((float) 0, Float::sum);
+            zTotal = zHistory.stream().reduce((float) 0, Float::sum);
         }
         if (gameState == 1 && (yTotal > 800 || yTotal < -800) && (zTotal < -100 || zTotal > 100)) {
             clearMovementHistory();

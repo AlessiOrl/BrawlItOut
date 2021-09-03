@@ -1,15 +1,22 @@
 <resources>
     <string name="app_name">BrawlItOut</string>
-    <string name="title_single">Single Player</string>
-    <string name="title_multi">Multi Player</string>
-    <string name="title_info">Info</string>
-    <string name="title_score">Scoreboard</string>
+    <string name="nav_single">Singleplayer</string>
+    <string name="nav_multi">Multiplayer</string>
+    <string name="nav_score">Scoreboard</string>
+    <string name="title_single">@string/nav_single</string>
+    <string name="title_multi">Local Multiplayer</string>
+    <string name="title_score">All-Time Records</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="reset">Reset</string>
     <string name="next">Next</string>
-    <string name="username">Enter your user name here.</string>
+    <string name="hintusername">Enter your user name here.</string>
     <string name="up">+</string>
     <string name="down">-</string>
-    <string name="hintUsername">Enter a name to save the score</string>
+    <string name="username">Username</string>
+    <string name="close">Close</string>
+    <string name="PlayerAddHint">To add a new player click on the "+" button</string>
+    <string name="MultiPlayerString">How many player are going to play?</string>
+    <string name="username_consigliated">Choose an username to save you score</string>
+    <string name="error_no_player">You need at least 1 player to play</string>
 </resources>

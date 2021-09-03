@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/navigation_single"
-        android:icon="@drawable/baseline_person_24"
-        android:title="@string/title_single" />
+        android:icon="@drawable/round_person_24"
+        android:title="@string/nav_score" />
     <item
         android:id="@+id/navigation_multi"
-        android:icon="@drawable/baseline_groups_24"
-        android:title="@string/title_multi" />
+        android:icon="@drawable/round_groups_24"
+        android:title="@string/nav_multi" />
     <item
         android:id="@+id/navigation_score"
-        android:icon="@drawable/baseline_leaderboard_24"
-        android:title="@string/title_score" />
+        android:icon="@drawable/round_leaderboard_24"
+        android:title="@string/nav_score" />
 
 
 </menu>

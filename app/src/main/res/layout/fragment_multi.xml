@@ -7,44 +7,56 @@
 
     <TextView
         android:id="@+id/lable1"
-        android:layout_width="213dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="28dp"
-        android:text="How many player are gonna join?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/MultiPlayerString"
+        android:textAlignment="center"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/down_btn"
-        android:layout_width="40dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="52dp"
         android:background="@drawable/my_button"
         android:text="@string/down"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/up_btn"
-        app:layout_constraintHorizontal_bias="0.603"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/player_nmbr"
         app:layout_constraintTop_toBottomOf="@+id/lable1" />
 
     <Button
         android:id="@+id/up_btn"
-        android:layout_width="40dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="112dp"
         android:background="@drawable/my_button"
         android:text="@string/up"
-        android:textColor="@color/white"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/player_nmbr"
+        app:layout_constraintTop_toBottomOf="@+id/lable1" />
+
+    <TextView
+        android:id="@+id/player_nmbr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="0"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lable1" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="287dp"
         android:layout_height="380dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lable1"
@@ -67,11 +79,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/bottom_scroll_home"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:src="@drawable/baseline_leaderboard_24" />
+            <TextView
+                android:id="@+id/HintPlayerAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="12dp"
+                android:text="@string/PlayerAddHint"
+                android:textSize="14sp" />
 
         </com.scwang.smartrefresh.layout.footer.FalsifyFooter>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
@@ -81,26 +98,16 @@
         android:layout_width="114dp"
         android:layout_height="48dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/my_button"
         android:text="@string/start"
         android:textColor="@color/white"
-        android:background="@drawable/my_button"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/smartRefreshLayout"
-
-        app:layout_constraintVertical_bias="0.158" />
-
-    <TextView
-        android:id="@+id/player_nmbr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/smartRefreshLayout"
-        app:layout_constraintEnd_toStartOf="@+id/up_btn"
-        app:layout_constraintStart_toEndOf="@+id/down_btn"
-        app:layout_constraintTop_toBottomOf="@+id/lable1" />
+        app:layout_constraintVertical_bias="0.15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

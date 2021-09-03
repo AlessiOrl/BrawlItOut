@@ -1,51 +1,38 @@
 package orlando.hci.brawlitout.Utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.provider.ContactsContract;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.dynamicanimation.animation.SpringAnimation;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Vector;
-
-import orlando.hci.brawlitout.R;
 
 public class DataHandlerSingleton {
     public static final String DATA_PATH = "saved_data";
 
     private static DataHandlerSingleton instance = null;
 
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     private ArrayList<Player> multiplayer = new ArrayList<>();
     private boolean ismultirunning;
     private Player currentPlayer = null;
     private Player currentmultiPlayer = null;
 
     private int currentPlayerIndex = 0;
-    private Context context;
+    private final Context context;
     private boolean showScore;
 
     // Costruttore invisibile
     private DataHandlerSingleton(Context context) throws IOException, ClassNotFoundException {
         this.context = context;
         this.players = this.load();
+        this.multiplayer.add(new Player("Player 1"));
 
     }
 
@@ -92,11 +79,6 @@ public class DataHandlerSingleton {
 
     }
 
-    public void remove(Player player) throws IOException, ClassNotFoundException {
-        players.remove(player);
-        save(players);
-    }
-
     public void remove(int position) throws IOException, ClassNotFoundException {
         players.remove(position);
         save(players);
@@ -131,10 +113,6 @@ public class DataHandlerSingleton {
         return currentmultiPlayer;
     }
 
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
-    }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -162,11 +140,6 @@ public class DataHandlerSingleton {
 
     public boolean showScore() {
         return this.showScore;
-    }
-
-    public void setmultiplayerlist(ArrayList<Player> multi) {
-        clearMultiplayerList();
-        this.multiplayer = multi;
     }
 
     public void restartMultiGame() {

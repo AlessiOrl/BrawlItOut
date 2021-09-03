@@ -1,19 +1,11 @@
 package orlando.hci.brawlitout.Activities;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,9 +21,7 @@ public class MultiScoreActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private Button close_btn;
-    private Context context;
     ScoreboardAdapter adapter;
-    MultiScoreActivity thisfrag = this;
 
 
     @Override
@@ -39,9 +29,7 @@ public class MultiScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         try {
             dataHandler = DataHandlerSingleton.getInstance(getApplicationContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -59,14 +47,11 @@ public class MultiScoreActivity extends AppCompatActivity {
         close_btn = findViewById(R.id.close_button);
         setAdapter();
 
-        close_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataHandler.setIsmultirunning(false);
-                dataHandler.setshowScore(false);
-                dataHandler.clearMultiplayerList();
-                finish();
-            }
+        close_btn.setOnClickListener(v -> {
+            dataHandler.setIsmultirunning(false);
+            dataHandler.setshowScore(false);
+            dataHandler.clearMultiplayerList();
+            finish();
         });
     }
 

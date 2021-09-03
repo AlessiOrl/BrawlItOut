@@ -19,9 +19,8 @@ import androidx.fragment.app.Fragment;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-import orlando.hci.brawlitout.Activities.MultiSinglePlayerActivity;
 import orlando.hci.brawlitout.Activities.MultiScoreActivity;
-import orlando.hci.brawlitout.Activities.SinglePlayerActivity;
+import orlando.hci.brawlitout.Activities.MultiSinglePlayerActivity;
 import orlando.hci.brawlitout.R;
 import orlando.hci.brawlitout.Utils.DataHandlerSingleton;
 import orlando.hci.brawlitout.Utils.Player;
@@ -68,13 +67,7 @@ public class MultiSinglePFragment extends Fragment {
                 doubleBackToExitPressedOnce = true;
                 Toast.makeText(getActivity().getApplicationContext(), "Please click BACK again to end the game", Toast.LENGTH_SHORT).show();
 
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        doubleBackToExitPressedOnce = false;
-                    }
-                }, 2000);
+                new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 
             }
         };
@@ -107,28 +100,23 @@ public class MultiSinglePFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_multi_single, container, false);
 
 
+        ss_btn = root.findViewById(R.id.button_start);
+        result = root.findViewById(R.id.chronometer);
+        usernameTextV = root.findViewById(R.id.text_username);
 
 
-        MultiSinglePFragment thisf = this;
-        ss_btn = (Button) root.findViewById(R.id.button_start);
-        result = (TextView) root.findViewById(R.id.chronometer);
-        usernameTextV = (TextView) root.findViewById(R.id.text_username);
-
-
-        ss_btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //if next
-                if (checkEnd()) {
-                    try {
-                        nextGame();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    startGame();
+        ss_btn.setOnClickListener(v -> {
+            //if next
+            if (checkEnd()) {
+                try {
+                    nextGame();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
+            } else {
+                startGame();
             }
+
         });
         return root;
     }
@@ -163,11 +151,6 @@ public class MultiSinglePFragment extends Fragment {
     }
 
 
-    public void resetGame() {
-        updateView("", -1);
-        dataHandler.clearCurrentPlayer();
-    }
-
     private void updateView(String username, double time) {
         usernameTextV.setText(username);
 
@@ -190,7 +173,7 @@ public class MultiSinglePFragment extends Fragment {
         return this.player != null && this.player.getTime() > 0;
     }
 
-    private void showScore() throws InterruptedException {
+    private void showScore() {
         Intent myIntent = new Intent(getActivity(), MultiScoreActivity.class);
         startActivity(myIntent);
     }

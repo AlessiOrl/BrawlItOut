@@ -12,4 +12,7 @@
     <color name="red">#FF0000</color>
     <color name="grey">#424242</color>
     <color name="darkGrey">#212121</color>
+    <color name="warningDark">#FF8800</color>
+    <color name="warning">#ffbb33</color>
+    <color name="remove">#FF3333</color>
 </resources>

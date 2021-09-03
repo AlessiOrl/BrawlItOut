@@ -1,8 +1,8 @@
 package orlando.hci.brawlitout.Utils;
 
-import java.io.Serializable;
+import androidx.annotation.NonNull;
 
-import javax.xml.namespace.QName;
+import java.io.Serializable;
 
 public class Player implements Serializable, Comparable<Player> {
 
@@ -31,6 +31,7 @@ public class Player implements Serializable, Comparable<Player> {
         return time;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return name;
