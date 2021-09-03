@@ -56,10 +56,8 @@ public class MultiSinglePlayerActivity extends AppCompatActivity implements Sens
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         imageButton = (GifImageButton) findViewById(R.id.image_button);
-        //sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
-        //todo: remove
-        Button debugbtn = (Button) findViewById(R.id.debug);
         imageButton.setClickable(false);
         try {
             dataHandler = DataHandlerSingleton.getInstance(getApplicationContext());
@@ -82,23 +80,7 @@ public class MultiSinglePlayerActivity extends AppCompatActivity implements Sens
             }
         });
 
-        debugbtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                starttime = System.nanoTime();
-                try {
-                    Thread.sleep((long) (300 + Math.random() * 200));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                stopGame();
-                try {
-                    saveScore();
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                finish();
-            }
-        });
+
 
         startGame();
 
