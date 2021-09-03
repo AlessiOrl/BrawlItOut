@@ -80,11 +80,11 @@ public class MultiPFragment extends Fragment {
         up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (dataHandler.getMultiplayers().size() <= 19){
-                    dataHandler.getMultiplayers().add(new Player("Player " + (dataHandler.getMultiplayers().size() + 1)));
-                    playerAdapter.notifyItemInserted(dataHandler.getMultiplayers().size());
-                    nplayer_text.setText("" + dataHandler.getMultiplayers().size());
-                }
+                if (dataHandler.getMultiplayers().size() == 20) return;
+                dataHandler.getMultiplayers().add(new Player("Player " + (dataHandler.getMultiplayers().size() + 1)));
+                playerAdapter.notifyItemInserted(dataHandler.getMultiplayers().size());
+                nplayer_text.setText("" + dataHandler.getMultiplayers().size());
+
 
             }
         });

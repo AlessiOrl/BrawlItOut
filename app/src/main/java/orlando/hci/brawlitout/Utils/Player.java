@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.xml.namespace.QName;
 
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
 
 
     private String name;
@@ -50,5 +50,10 @@ public class Player implements Serializable {
 
     public void setSaved(boolean saved) {
         this.saved = saved;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        return Double.compare(this.time, o.getTime());
     }
 }

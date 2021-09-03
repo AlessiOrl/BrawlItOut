@@ -19,7 +19,7 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.My
     private ArrayList<Player> usersList;
 
     public ScoreboardAdapter(ArrayList<Player> usersList) {
-        usersList.sort(Comparator.comparing(Player::getTime));
+        usersList.sort(Player::compareTo);
         this.usersList = usersList;
     }
 
