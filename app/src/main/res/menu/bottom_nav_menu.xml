@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_single"
         android:icon="@drawable/round_person_24"
-        android:title="@string/nav_score" />
+        android:title="@string/nav_single" />
     <item
         android:id="@+id/navigation_multi"
         android:icon="@drawable/round_groups_24"
