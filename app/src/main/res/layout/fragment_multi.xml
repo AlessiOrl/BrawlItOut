@@ -54,8 +54,8 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
-        android:layout_width="287dp"
-        android:layout_height="380dp"
+        android:layout_width="284dp"
+        android:layout_height="338dp"
         android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,17 +97,15 @@
         android:id="@+id/btn_start"
         android:layout_width="114dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/my_button"
         android:text="@string/start"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
 
-        app:layout_constraintTop_toBottomOf="@+id/smartRefreshLayout"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/smartRefreshLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

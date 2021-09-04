@@ -17,6 +17,6 @@
     <string name="close">Close</string>
     <string name="PlayerAddHint">To add a new player click on the "+" button</string>
     <string name="MultiPlayerString">How many player are going to play?</string>
-    <string name="username_consigliated">Choose an username to save you score</string>
+    <string name="username_consigliated">Choose an username to save your score</string>
     <string name="error_no_player">You need at least 1 player to play</string>
 </resources>
