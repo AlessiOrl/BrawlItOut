@@ -54,7 +54,7 @@ public class MultiSinglePlayerActivity extends AppCompatActivity implements Sens
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         imageButton = findViewById(R.id.image_button);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
 
         imageButton.setClickable(false);
         try {
@@ -106,7 +106,7 @@ public class MultiSinglePlayerActivity extends AppCompatActivity implements Sens
             yTotal = yHistory.stream().reduce((float) 0, Float::sum);
             zTotal = zHistory.stream().reduce((float) 0, Float::sum);
         }
-        if (gameState == 1 && (yTotal > 800 || yTotal < -800) && (zTotal < -100 || zTotal > 100)) {
+        if (gameState == 1 && yTotal < -700 && (zTotal < -100 || zTotal > 100)) {
             clearMovementHistory();
             gameState = 2;
 
@@ -114,10 +114,12 @@ public class MultiSinglePlayerActivity extends AppCompatActivity implements Sens
             v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
             starttime = System.nanoTime();
 
-        } else if (gameState == 2 && (xTotal < -220 || xTotal > 230 || zTotal < -220 || zTotal > 230)) {
+        } else if (gameState == 2 && (xTotal < -160 || xTotal > 160 || zTotal < -160 || zTotal > 160)) {
             imageButtonStopState();
             v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
             sensorManager.unregisterListener(this);
+
+
 
         }
     }

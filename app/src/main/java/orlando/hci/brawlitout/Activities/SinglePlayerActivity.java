@@ -57,7 +57,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         imageButton = findViewById(R.id.image_button);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
 
 
         imageButton.setClickable(false);
