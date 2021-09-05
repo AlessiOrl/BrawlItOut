@@ -57,7 +57,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
             super(itemView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             modifyBtn = itemView.findViewById(R.id.modifyBtn);
-            cardView = itemView.findViewById(R.id.cardview_sound);
+            cardView = itemView.findViewById(R.id.card);
             context = itemView.getContext();
             //add to fav btn
             modifyBtn.setOnClickListener(view -> {

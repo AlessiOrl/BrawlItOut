@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import orlando.hci.brawlitout.Adapters.ScoreboardAdapter;
@@ -31,10 +36,8 @@ import orlando.hci.brawlitout.Utils.Player;
 public class ScoreFragment extends Fragment {
 
     private DataHandlerSingleton dataHandler;
-
     private RecyclerView recyclerView;
-    ScoreboardAdapter adapter;
-
+    private ScoreboardAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,11 +45,9 @@ public class ScoreFragment extends Fragment {
         setHasOptionsMenu(true);
         try {
             dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -55,7 +56,8 @@ public class ScoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_score, container, false);
-        recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView = root.findViewById(R.id.scoreboard);
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
@@ -65,13 +67,13 @@ public class ScoreFragment extends Fragment {
     }
 
     private void setAdapter() {
-        adapter = new ScoreboardAdapter(dataHandler.getPlayers());
+
+        adapter = new ScoreboardAdapter(dataHandler.getPlayers(), true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
-
 
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -87,7 +89,7 @@ public class ScoreFragment extends Fragment {
             //usersList.remove(position);
             try {
                 dataHandler.remove(position);
-                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRemoved(position - 1);
                 Snackbar.make(recyclerView, deletedPlayer + " removed", Snackbar.LENGTH_LONG)
                         .setAction("Undo", v -> {
                             try {
@@ -101,9 +103,7 @@ public class ScoreFragment extends Fragment {
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
             setAdapter();
-
         }
 
         @Override
