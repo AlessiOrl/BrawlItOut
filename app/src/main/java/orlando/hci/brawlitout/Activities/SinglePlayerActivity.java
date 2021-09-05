@@ -78,8 +78,6 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
             finish();
         });
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         startGame();
 
     }

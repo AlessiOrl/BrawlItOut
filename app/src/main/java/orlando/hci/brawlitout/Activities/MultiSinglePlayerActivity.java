@@ -75,11 +75,7 @@ public class MultiSinglePlayerActivity extends AppCompatActivity implements Sens
         });
 
 
-
         startGame();
-
-
-
     }
 
 
