@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class ScoreFragment extends Fragment {
     private DataHandlerSingleton dataHandler;
     private RecyclerView recyclerView;
     private ScoreboardAdapter adapter;
-
+    private View root;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class ScoreFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         setAdapter();
-
+        this.root = root;
         return root;
     }
 
@@ -90,6 +91,7 @@ public class ScoreFragment extends Fragment {
             try {
                 dataHandler.remove(position);
                 adapter.notifyItemRemoved(position - 1);
+
                 Snackbar.make(recyclerView, deletedPlayer + " removed", Snackbar.LENGTH_LONG)
                         .setAction("Undo", v -> {
                             try {
@@ -99,7 +101,8 @@ public class ScoreFragment extends Fragment {
                             } catch (IOException | ClassNotFoundException e) {
                                 e.printStackTrace();
                             }
-                        }).show();
+                        }).setAnchorView(getActivity().findViewById(R.id.nav_view))
+                        .show();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
