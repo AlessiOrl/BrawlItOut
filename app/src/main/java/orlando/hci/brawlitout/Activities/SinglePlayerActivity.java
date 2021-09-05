@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -77,7 +78,8 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
             finish();
         });
 
-
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         startGame();
 
     }
@@ -146,7 +148,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements SensorEve
 
     private void imageButtonStopState() {
         imageButton.setClickable(true);
-        imageButton.setImageResource(R.drawable.green);
+        imageButton.setImageResource(R.drawable.green2);
         imageButton.setVisibility(View.VISIBLE);
     }
 

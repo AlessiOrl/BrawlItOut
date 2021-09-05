@@ -7,17 +7,15 @@
 
     <pl.droidsonroids.gif.GifImageButton
         android:id="@+id/image_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="horizontal|vertical"
-        android:scaleType="fitStart"
-        android:scaleX="1.1"
-        android:scaleY="1.45"
+        android:layout_width="450dp"
+        android:layout_height="883dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/down_white"
-        android:translationY="160dp"
-        android:visibility="gone"
-        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"
-        tools:layout_editor_absoluteY="1dp" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
