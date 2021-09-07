@@ -82,7 +82,7 @@ public class MultiSinglePFragment extends Fragment {
     public void onResume() {
         super.onResume();
         this.player = dataHandler.getCurrentMultiPlayer();
-        if (this.player != null) {
+        if (this.player != null && this.player.getTime() > 0 ) {
             updateView(this.player.getName(), this.player.getTime());
             try {
                 saveScore(this.player);
@@ -103,6 +103,7 @@ public class MultiSinglePFragment extends Fragment {
         ss_btn = root.findViewById(R.id.button_start);
         result = root.findViewById(R.id.chronometer);
         usernameTextV = root.findViewById(R.id.text_username);
+        this.player = dataHandler.getCurrentMultiPlayer();
 
 
         ss_btn.setOnClickListener(v -> {
@@ -118,6 +119,7 @@ public class MultiSinglePFragment extends Fragment {
             }
 
         });
+        updateView(player.getName(), player.getTime());
         return root;
     }
 

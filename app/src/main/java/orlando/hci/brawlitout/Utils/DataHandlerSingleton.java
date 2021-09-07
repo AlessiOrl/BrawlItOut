@@ -61,6 +61,7 @@ public class DataHandlerSingleton {
     public void clearMultiplayerList() {
         this.ismultirunning = false;
         this.multiplayer = new ArrayList<>();
+        this.multiplayer.add(new Player("Player 1"));
         this.currentPlayerIndex = 0;
     }
 
