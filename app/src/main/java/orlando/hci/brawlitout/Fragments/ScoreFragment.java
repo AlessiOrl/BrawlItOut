@@ -1,13 +1,20 @@
 package orlando.hci.brawlitout.Fragments;
 
+import android.app.AlertDialog;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +35,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import orlando.hci.brawlitout.Adapters.ScoreboardAdapter;
@@ -43,6 +51,7 @@ public class ScoreFragment extends Fragment {
     private ScoreboardAdapter adapter;
     private View root;
     private static int counter = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +71,8 @@ public class ScoreFragment extends Fragment {
         getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_score, container, false);
         recyclerView = root.findViewById(R.id.scoreboard);
-        if (counter == 0){
-            Toast toast = Toast.makeText(getActivity(),"You can delete players swiping on the sides",Toast.LENGTH_LONG);
+        if (counter == 0) {
+            Toast toast = Toast.makeText(getActivity(), "You can delete players swiping on the sides", Toast.LENGTH_LONG);
             toast.show();
             counter++;
         }
@@ -121,11 +130,48 @@ public class ScoreFragment extends Fragment {
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                     .addBackgroundColor(ContextCompat.getColor(getContext(), R.color.remove))
-                    .addActionIcon(R.drawable.round_delete_forever_24)
+                    .addActionIcon(R.drawable.round_delete_sweep_20)
                     .create()
                     .decorate();
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.top_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater layoutinflater = LayoutInflater.from(getContext());
+        alertDialogBuilder.setTitle("Delete leaderboard");
+        alertDialogBuilder.setMessage("Are you sure that you want to clear the entire leaderboard?\n\nThis operation cannot be undone.");
+
+        // prompt for username
+        alertDialogBuilder.setPositiveButton("Delete leaderboard", (dialog, id) -> {
+            // and display the username on main activity layout
+            Toast toast = Toast.makeText(getActivity(), "All player deleted", Toast.LENGTH_LONG);
+            toast.show();
+            try {
+                dataHandler.clearPlayers();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            adapter.notifyDataSetChanged();
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", null);
+        // all set and time to build and show up!
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(Color.parseColor("#E53935"));
+
+        return super.onOptionsItemSelected(item);
+    }
 }

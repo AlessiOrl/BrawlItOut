@@ -80,6 +80,11 @@ public class DataHandlerSingleton {
 
     }
 
+    public void clearPlayers() throws IOException {
+        players.clear();
+        save(players);
+    }
+
     public void remove(int position) throws IOException, ClassNotFoundException {
         players.remove(position);
         save(players);

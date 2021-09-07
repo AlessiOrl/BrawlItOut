@@ -11,6 +11,8 @@
         <item name="cardViewStyle">@style/CardView.Light</item>
         <item name="errorTextColor">@color/warningDark</item>
         <item name="errorIconDrawable">@drawable/baseline_warning_24</item>
+        <item name="android:screenOrientation">portrait</item>
+
     </style>
 
     <!-- Base application theme. -->
@@ -21,6 +23,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="backgroundColor">@color/colorDarkBackground</item>
         <item name="cardViewStyle">@style/CardView.Dark</item>
+        <item name="android:screenOrientation">portrait</item>
+
     </style>
 
 </resources>
