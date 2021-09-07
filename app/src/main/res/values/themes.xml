@@ -15,16 +15,4 @@
 
     </style>
 
-    <!-- Base application theme. -->
-    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="backgroundColor">@color/colorDarkBackground</item>
-        <item name="cardViewStyle">@style/CardView.Dark</item>
-        <item name="android:screenOrientation">portrait</item>
-
-    </style>
-
 </resources>
