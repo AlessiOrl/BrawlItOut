@@ -60,7 +60,7 @@ public class SinglePFragment extends Fragment {
     public void onResume() {
         super.onResume();
         this.player = dataHandler.getCurrentPlayer();
-        if (this.player != null) {
+        if (this.player != null && this.player.getTime() > 0) {
             updateView(this.player.getName(), this.player.getTime());
             try {
                 saveScore(this.player);
