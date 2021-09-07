@@ -3,12 +3,14 @@ package orlando.hci.brawlitout.Fragments;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,10 +42,12 @@ public class ScoreFragment extends Fragment {
     private RecyclerView recyclerView;
     private ScoreboardAdapter adapter;
     private View root;
+    private static int counter = 0;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         try {
             dataHandler = DataHandlerSingleton.getInstance(getActivity().getApplicationContext());
         } catch (IOException | ClassNotFoundException e) {
@@ -58,7 +62,11 @@ public class ScoreFragment extends Fragment {
         getActivity().getApplicationContext();
         View root = inflater.inflate(R.layout.fragment_score, container, false);
         recyclerView = root.findViewById(R.id.scoreboard);
-
+        if (counter == 0){
+            Toast toast = Toast.makeText(getActivity(),"You can delete players swiping on the sides",Toast.LENGTH_LONG);
+            toast.show();
+            counter++;
+        }
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
